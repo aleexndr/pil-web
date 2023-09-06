@@ -1,0 +1,6 @@
+<div id="username">Hola {{ username }}</div>
+
+<form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <input type="submit" value="Cerrar Sesion">
+</form>
