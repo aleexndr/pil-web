@@ -6,6 +6,10 @@
     box-sizing: border-box ;
 }
 
+#password-valid {
+    width: 100%;
+}
+
 .marco {
     border: solid 3px #fff;
 }
@@ -49,16 +53,18 @@ body {
     background-color: transparent;
     border: 0;
     border-radius: 0;
+    padding-right: 25px;
     color: #fff;
-    border-bottom: solid #fff 1px;
+    border-bottom: solid #ccc 1px;
 }
 
 .input-custom {
+    width: 100%;
     background-color: transparent;
     border: 0;
     color: #fff;
     border-radius: 0;
-    border-bottom: solid #fff 1px;
+    border-bottom: solid #ccc 1px;
 }
 
 .buscardor {
@@ -82,8 +88,9 @@ body {
 
 .boton-login-div {
     margin: auto;
-    margin-top: 40px;
-    max-width: 200px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
 }
 
 .form-control {
@@ -141,3 +148,50 @@ body {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+.input-wrapper {
+    position: relative;
+}
+  
+.input-box {
+    font-size: 16px;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    color: #08AEEA;
+    width: 100%;
+    background-color: transparent;
+    transition: border-color 0.3s ease-in-out;
+}
+  
+.underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #427FC8;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+  
+.input-box:focus {
+    border-color: #427FC8;
+    outline: none;
+}
+  
+.input-box:focus + .underline {
+    transform: scaleX(1);
+}
+  

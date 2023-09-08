@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.db.models import Q
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.db import connections
 from .models import Datos
@@ -20,7 +21,7 @@ def search_personas (request):
     for keyword in keywords:
         query &= (Q(usuario__icontains=keyword) | Q(appat__icontains=keyword) | Q(apmat__icontains=keyword) | Q(nombres__icontains=keyword))
         
-    personas = Datos.objects.filter(query)
+    personas = Datos.objects.filter(query).order_by('appat',  'apmat', 'nombres')
     
     results = [f'{persona.appat} {persona.apmat} {persona.nombres}' for persona in personas]
     
@@ -42,8 +43,7 @@ def check_password(request):
         return JsonResponse({'password_match': True})
     
     else:
-        return JsonResponse({'password_match': False})
-
+        return JsonResponse({'password_match': False,})
 
 
 def index(request):
@@ -54,7 +54,7 @@ def index(request):
     if user_id:
         try:
             usuario = Datos.objects.get(id=user_id)
-            username = usuario.usuario
+            username = usuario.nombres
         except Datos.DoesNotExist:
             pass
     else:

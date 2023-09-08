@@ -38,35 +38,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const submitButton = document.getElementById('submit-button');
   submitButton.addEventListener('click', function(event) {
-    event.preventDefault(); // Evita que el formulario se envíe automáticamente
+    event.preventDefault();
   
     const selectedId = document.getElementById('selected-id').value;
     const passwordField = document.getElementById('password-valid').value;
   
-    // Verifica si el elemento "error-message" existe antes de intentar eliminarlo
     const errorMessage = document.getElementById('error-message');
     if (errorMessage) {
-      errorMessage.remove(); // Elimina mensajes de error anteriores
+      errorMessage.remove();
     }
-  
-    // Realiza una solicitud AJAX para verificar la contraseña
-    fetch(`/check-password/?id=${selectedId}&password=${encodeURIComponent(passwordField)}`)
-      .then(response => response.json())
-      .then(data => {
-        if (data.password_match) {
-          // Contraseña correcta, redirige a index.html
-          window.location.href = '/index'; // Redirige al usuario a index.html
-        } else {
-          // Contraseña incorrecta, muestra un mensaje de error
-          const newErrorMessage = document.createElement('div');
-          newErrorMessage.id = 'error-message';
-          newErrorMessage.className = 'alert-custom';
-          newErrorMessage.innerHTML = '<ul><li>La contraseña ingresada es incorrecta.</li></ul>';
-          document.querySelector('form').appendChild(newErrorMessage);
-        }
-      })
-      .catch(error => {
-        console.error('Error en la solicitud:', error);
-      });
+
+
+  fetch(`/check-password/?id=${selectedId}&password=${encodeURIComponent(passwordField)}`)
+  .then(response => response.json())
+  .then(data => {
+    const errorMessageDiv = document.querySelector('#error-message');
+
+    if (data.password_match) {
+      window.location.href = '/index';
+    } else {
+      // Contraseña incorrecta, muestra el mensaje de error arriba del botón
+      const newErrorMessage = document.createElement('div');
+      newErrorMessage.id = 'error-message';
+      newErrorMessage.className = 'alert-custom';
+      newErrorMessage.innerHTML = '<ul><li>El usuario o contraseña son incorrectos. Por favor, inténtelo de nuevo.</li></ul>';
+      
+      // Inserta el mensaje de error antes del botón de inicio de sesión
+      const botonLoginDiv = document.querySelector('.boton-login-div');
+      botonLoginDiv.parentNode.insertBefore(newErrorMessage, botonLoginDiv);
+    }
+  })
+  .catch(error => {
+    console.error('Error en la solicitud:', error);
+  });
+
   });  
 });
