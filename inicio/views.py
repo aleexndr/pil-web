@@ -1,7 +1,4 @@
-from django.http import JsonResponse
-from django.db.models import Q
 from django.shortcuts import render, redirect, HttpResponseRedirect
-from django.db import connections
 from .models import Datos
 from office365.runtime.auth.authentication_context import AuthenticationContext
 from office365.runtime.auth.user_credential import UserCredential
@@ -14,89 +11,47 @@ from office365.runtime.client_request_exception import RequestException
 
 # Create your views here.
 
-def inicio (request):
+def iniciar_sesion (request):
+    
     return render (request, 'login.html')
 
 
-# def search_personas (request):
-#     search_query = request.GET.get('q')
-#     keywords = search_query.split()
+def autenticacion(request):
     
-#     query = Q()
-#     for keyword in keywords:
-#         query &= (Q(usuario__icontains=keyword) | Q(appat__icontains=keyword) | Q(apmat__icontains=keyword) | Q(nombres__icontains=keyword))
+    return redirect('iniciar_sesion')
+
+
+def inicio(request):
+    
+    return render(request, 'index.html')
+
+
+def cerrar_sesion(request):
         
-#     personas = Datos.objects.filter(query).order_by('appat',  'apmat', 'nombres')
+    return redirect('iniciar_sesion')
+
+
+def registro(request):
     
-#     results = [f'{persona.appat} {persona.apmat} {persona.nombres}' for persona in personas]
+    return render(request, 'register.html')
+
+
+def recuperar_contraseña(request):
     
-#     ids = [persona.id for persona in personas]
+    return render(request, 'resetpass.html')
+
+
+def verificacion(request):
     
-#     return JsonResponse({'results': results, 'ids':ids})
-
-
-# def check_password(request):
-#     user_id = request.GET.get('id')
-#     password = request.GET.get('password')
-
-#     with connections['default'].cursor() as cursor:
-#         cursor.execute("SELECT COUNT(*) FROM datos WHERE id = %s AND contrasena = %s", [user_id, password])
-#         result = cursor.fetchone()[0]
-
-#     if result == 1:
-#         request.session['user_id'] = user_id
-#         return JsonResponse({'password_match': True})
-    
-#     else:
-#         return JsonResponse({'password_match': False,})
-
-
-def check_password(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        try:
-            user = Datos.objects.get(usuario=username, contrasena=password)
-            # Usuario autenticado correctamente, realiza las operaciones necesarias, por ejemplo, establecer la sesión.
-            request.session['user_id'] = user.id
-            return HttpResponseRedirect('/index/')  # Redirige al usuario a la página de inicio después del inicio de sesión exitoso
-        except Datos.DoesNotExist:
-            # Usuario no encontrado o contraseña incorrecta
-            return render(request, 'login.html', {'error_message': 'El usuario o la contraseña son incorrectos. Por favor, inténtelo de nuevo.'})
-
-    return render(request, 'login.html')
-
-
-
-def index(request):
-    
-    user_id = request.session.get('user_id', None)
-    username = None
-    
-    if user_id:
-        try:
-            usuario = Datos.objects.get(id=user_id)
-            username = usuario.nombres
-        except Datos.DoesNotExist:
-            pass
-    else:
-        return redirect('inicio')
-    
-    return render(request, 'index.html', {'username': username})
-
-
-def logout(request):
-    
-    if 'user_id' in request.session:
-        del request.session['user_id']
-        
-    return redirect('lista_personas')
+    return render(request, 'verifycode.html')
 
 
 
 
-def upload_file(request):
+
+
+
+def subir_archivo(request):
     
     site_url = 'https://pilperusac.sharepoint.com/sites/intranetpil-Intranet'
     username = 'alejandro.condori@pil.com.pe'
@@ -107,19 +62,14 @@ def upload_file(request):
         file = request.FILES['archivo']
 
         try:
-            
             ctx = ClientContext(site_url).with_user_credentials(username=username, password=password)
 
-            try:
-                
-                
-                
-                
+            try:     
                 target_folder = ctx.web.get_folder_by_server_relative_url(folder_url)
                 
             except RequestException as rex:
                 print(f"Error al obtener la carpeta de destino: {rex}")
-                return redirect('index')
+                return redirect('inicio')
             
             print(f'target_folder: {target_folder}')
             print(f'serverRelative: {target_folder.serverRelativeUrl}')
@@ -134,7 +84,7 @@ def upload_file(request):
                     print('La carpeta de destino no es válida')
 
 
-            return redirect('index')
+            return redirect('inicio')
         
         except Exception as e:
 
