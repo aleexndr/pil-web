@@ -1,12 +1,10 @@
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect
 from .models import Datos
 from office365.runtime.auth.authentication_context import AuthenticationContext
 from office365.runtime.auth.user_credential import UserCredential
 from office365.sharepoint.client_context import ClientContext
 from office365.sharepoint.files.file import File
 from office365.runtime.client_request_exception import RequestException
-
-
 
 
 # Create your views here.
