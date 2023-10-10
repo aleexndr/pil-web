@@ -96,47 +96,32 @@ def cambio_contraseña(request):
 
 
 
+from django.http import HttpResponse
 
-
-def subir_archivo(request):
-    
-    site_url = 'https://pilperusac.sharepoint.com/sites/intranetpil-Intranet'
-    username = 'alejandro.condori@pil.com.pe'
-    password = 'Core5050$'
-    folder_url = "/sites/intranetpil-Intranet/Documentos compartidos/Intranet/"
-    
+def subir_archivo_sharepoint(request):
     if request.method == 'POST' and request.FILES['archivo']:
-        file = request.FILES['archivo']
+        uploaded_file = request.FILES['archivo']
+        file_name = uploaded_file.name
+        file_content = uploaded_file.read()
+
+        sharepoint_url = "https://pilperusac.sharepoint.com/sites/intranetpil-Intranet"
+        username = "alejandro.condori@pil.com.pe"
+        password = "Core5050$"
+        sharepoint_folder = "/sites/intranetpil-Intranet/Documentos compartidos/Intranet/alejandro"
+
+        ctx = ClientContext(sharepoint_url).with_user_credentials(username, password)
 
         try:
-            ctx = ClientContext(site_url).with_user_credentials(username=username, password=password)
-
-            try:     
-                target_folder = ctx.web.get_folder_by_server_relative_url(folder_url)
-                
-            except RequestException as rex:
-                print(f"Error al obtener la carpeta de destino: {rex}")
-                return redirect('inicio')
-            
-            print(f'target_folder: {target_folder}')
-            print(f'serverRelative: {target_folder.serverRelativeUrl}')
-            
-            
-            with file as file_content:
-                file_bytes = file_content.read()
-                if target_folder is not None and target_folder.serverRelativeUrl is not None:
-                    File.save_binary(ctx, file.name, file_bytes, target_folder.serverRelativeUrl + '/' + file.name)
-                    ctx.execute_query()
-                else:
-                    print('La carpeta de destino no es válida')
-
+            target_folder = ctx.web.get_folder_by_server_relative_url(sharepoint_folder)
+            target_file = target_folder.files.add(file_name, file_content)
+            ctx.load(target_file)
+            ctx.execute_query()
 
             return redirect('inicio')
-        
         except Exception as e:
-
             print(f"Error uploading file: {e}")
-
-    return render(request, 'index.html')
+            return HttpResponse(f"Error uploading file: {e}")
+    else:
+        return HttpResponse("Archivo no encontrado.")
 
 
