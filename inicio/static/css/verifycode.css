@@ -11,7 +11,7 @@ body {
 }
 
 .fondo {
-  background: url('../images/fondo.webp');
+  background: url('../img/fondo.webp');
   background-size: cover;
   background-attachment: fixed;
   background-position: center;

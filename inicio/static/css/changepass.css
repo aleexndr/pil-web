@@ -2,65 +2,53 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box ;
-}
-
-body {
+  }
+  
+  body {
     color: #fff;
     display: grid;
     place-items: center;
-}
-
-.fondo {
-    background: url('../images/fondo.webp');
+  }
+  
+  .fondo {
+    background: url('../img/fondo.webp');
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     height: 100vh;
-}
-
-.total {
+  }
+  
+  .total {
     padding: 20px 50px 30px 50px;
     background-color: rgba(26, 28, 30, 0.8);
     border-radius: 10px;
     max-width: 500px;
     margin: 10px;
-}
-
-.img-login {
+  }
+  
+  .img-login {
     max-width: 320px;
     margin: 0 auto 10px auto;
-}
-
-.img-login img {
+  }
+  
+  .img-login img {
     width: 100%;
     height: auto;
-}
-
-.space {
-    margin-top: 5px;
-}
-
-.datos-space {
-    margin-left: 10px;
-}
-
-.boton-register {
+  }
+  
+  .boton-changepass {
     width: 100%;
     margin: 30px 0px 15px 0px;
     background-color: #265183;
     border: 0;
-}
-
-.boton-register:hover {
-    background-color: #427FC8;
-}
-
-.input-wrapper {
-    position: relative;
-}
+  }
   
-.input-box {
+  .boton-changepass:hover {
+    background-color: #427FC8;
+  }
+  
+  .input-box {
     font-size: 16px;
     padding: 10px 0;
     border: none;
@@ -69,9 +57,9 @@ body {
     width: 100%;
     background-color: transparent;
     transition: border-color 0.3s ease-in-out;
-}
+  }
   
-.underline {
+  .underline {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -80,56 +68,25 @@ body {
     background-color: #427FC8;
     transform: scaleX(0);
     transition: transform 0.3s ease-in-out;
-}
+  }
   
-.input-box:focus {
+  .input-box:focus {
     border-color: #427FC8;
     outline: none;
-}
+  }
   
-.input-box:focus + .underline {
+  .input-box:focus + .underline {
     transform: scaleX(1);
-}
+  }
+  
+  .form {
+    margin-top: 10px;
+  }
 
-
-.links-register {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 25px 10px 0px 10px;
-}
-
-.links-register a {
-    text-decoration: none;
+  .space {
+    margin-top: 5px;
+  }
+  
+  p {
     color: #ccc;
-}
-
-.links-register a:hover {
-    color: #fff;
-}
-
-.links-pass {
-    display: flex;
-    margin: 20px 0px;
-}
-
-.links-pass a {
-    text-decoration: none;
-    color: #ccc;
-}
-
-.links-pass a:hover {
-    color: #fff;
-}
-
-.datos {
-    display: flex;
-}
-
-h3 {
-    text-align: center;
-}
-
-.form {
-    margin-block: 30px;
-}
+  }

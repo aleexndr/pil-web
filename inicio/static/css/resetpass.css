@@ -11,7 +11,7 @@ body {
 }
 
 .fondo {
-    background: url('../images/fondo.webp');
+    background: url('../img/fondo.webp');
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -23,6 +23,7 @@ body {
     padding: 20px 50px 30px 50px;
     background-color: rgba(26, 28, 30, 0.8);
     border-radius: 10px;
+    max-width: 500px;
     margin: 10px;
 }
 
@@ -36,29 +37,22 @@ body {
     height: auto;
 }
 
-.icon-custom {
-    background-color: transparent;
-    border: 0;
-    border-radius: 0;
-    font-size: 17px;
-    padding-right: 25px;
-    color: #fff;
-    border-bottom: solid #ccc 1px;
+.space {
+    margin-top: 5px;
 }
 
-.contraseña {
-    margin-top: 15px;
+.datos-space {
+    margin-left: 10px;
 }
 
-.boton-login {
+.boton-auth {
     width: 100%;
-    margin-top: 20px;
-    font-size: 17px;
+    margin: 30px 0px 15px 0px;
     background-color: #265183;
     border: 0;
 }
 
-.boton-login:hover {
+.boton-auth:hover {
     background-color: #427FC8;
 }
 
@@ -67,7 +61,7 @@ body {
 }
   
 .input-box {
-    font-size: 17px;
+    font-size: 16px;
     padding: 10px 0;
     border: none;
     border-bottom: 1px solid #ccc;
@@ -97,35 +91,14 @@ body {
     transform: scaleX(1);
 }
 
-
-.links-register {
+.datos {
     display: flex;
-    font-size: 17px;
-    align-items: center;
-    justify-content: center;
-    margin: 25px 10px 0px 10px;
 }
 
-.links-register a {
-    text-decoration: none;
-    color: #ccc;
+.form {
+    margin-top: 30px;
 }
 
-.links-register a:hover {
-    color: #fff;
-}
-
-.links-pass {
-    display: flex;
-    font-size: 17px;
-    margin: 10px 0px;
-}
-
-.links-pass a {
-    text-decoration: none;
-    color: #ccc;
-}
-
-.links-pass a:hover {
-    color: #fff;
+h3 {
+    text-align: center;
 }

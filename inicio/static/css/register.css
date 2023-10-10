@@ -11,7 +11,7 @@ body {
 }
 
 .fondo {
-    background: url('../images/fondo.webp');
+    background: url('../img/fondo.webp');
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
@@ -45,14 +45,14 @@ body {
     margin-left: 10px;
 }
 
-.boton-auth {
+.boton-register {
     width: 100%;
     margin: 30px 0px 15px 0px;
     background-color: #265183;
     border: 0;
 }
 
-.boton-auth:hover {
+.boton-register:hover {
     background-color: #427FC8;
 }
 
@@ -91,14 +91,45 @@ body {
     transform: scaleX(1);
 }
 
+
+.links-register {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 25px 10px 0px 10px;
+}
+
+.links-register a {
+    text-decoration: none;
+    color: #ccc;
+}
+
+.links-register a:hover {
+    color: #fff;
+}
+
+.links-pass {
+    display: flex;
+    margin: 20px 0px;
+}
+
+.links-pass a {
+    text-decoration: none;
+    color: #ccc;
+}
+
+.links-pass a:hover {
+    color: #fff;
+}
+
 .datos {
     display: flex;
 }
 
-.form {
-    margin-top: 30px;
-}
-
 h3 {
     text-align: center;
+}
+
+.form {
+    margin-block: 15px;
 }

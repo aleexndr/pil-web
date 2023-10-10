@@ -31,10 +31,18 @@ INSTALLED_APPS = [
 # settings.py
 
 # Configuración de sesiones
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-SESSION_COOKIE_NAME = 'session_started'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# SESSION_COOKIE_NAME = 'session_started'
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+# SESSION_SAVE_EVERY_REQUEST = True
+
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-SESSION_SAVE_EVERY_REQUEST = True
+
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
 
 
 MIDDLEWARE = [
@@ -127,7 +135,3 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-# FILE_UPLOAD_HANDLERS = [
-#     'django.core.files.uploadhandler.TemporaryFileUploadHandler',
-# ]

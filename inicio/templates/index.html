@@ -4,13 +4,10 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Index</title>
-   <link rel="stylesheet" href="../static/cssfiles/sidebar.css">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+   <link rel="stylesheet" href="../static/css/sidebar.css">
    <script src="https://kit.fontawesome.com/fffb8e8912.js" crossorigin="anonymous"></script>
  </head>
   <body>
-
-    
 
     <!-- SIDEBAR -->
 
@@ -18,7 +15,7 @@
       <div class="side-bar">
 
         <div class="logo">
-          <img src="../static/images/logo_pil.png" alt="">
+          <img src="../static/img/logo_pil.png" alt="">
         </div>
  
         <div class="close-btn">
@@ -105,59 +102,13 @@
       
       <div class="user">
         <div class="user-img">
-          <img src="../static/images/foto_perfil.jpg" alt="imgprofile">
+          <img src="../static/img/foto_perfil.jpg" alt="imgprofile">
         </div>
-        <div class="name">{{ username }}</div>
+        <div class="name">{{ user_name }}</div>
         <a href="{% url 'cerrar_sesion' %}"><i class="fa-solid fa-right-from-bracket"></i></a>
       </div>
     </div>
 
- 
-
-
-
-    <!-- CODIGO JAVASCRIPT -->
-    <script>
-     const subBtns = document.querySelectorAll(".sub-btn");
-
-     for (let i = 0; i < subBtns.length; i++) {
-       subBtns[i].addEventListener("click", (e) => {
-        e.preventDefault();
-        const arrowIcon = e.currentTarget.querySelector(".arrow");
-        const subMenu = e.currentTarget.nextElementSibling;
-        arrowIcon.classList.toggle("rotate");
-        subMenu.classList.toggle("show");
-      });
-    }
-
-     const subBtns2 = document.querySelectorAll(".sub-btn2");
-
-      for (let i = 0; i < subBtns2.length; i++) {
-        subBtns2[i].addEventListener("click", (e) => {
-         e.preventDefault();
-         const arrowIcon2 = e.currentTarget.querySelector(".arrow2");
-         const subMenu2 = e.currentTarget.nextElementSibling;
-         arrowIcon2.classList.toggle("rotate");
-         subMenu2.classList.toggle("show2");
-       });
-     }
-
-
-     const menuBtn = document.querySelector('.menu-btn');
- 
-     const sideBar = document.querySelector('.side-bar');
- 
-     menuBtn.addEventListener('click', function() {
- 
-       sideBar.classList.add('active');
-     });
- 
-     const closeBtn = document.querySelector('.close-btn');
- 
-     closeBtn.addEventListener('click', function() {
-       
-       sideBar.classList.remove('active');
-     });
-    </script>
+    <script src="../static/js/sidebar.js"></script>
  </body>
 </html>
