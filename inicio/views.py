@@ -1,11 +1,7 @@
 
 from .models import Datos
-from office365.runtime.auth.authentication_context import AuthenticationContext
-from office365.runtime.auth.user_credential import UserCredential
 from office365.sharepoint.client_context import ClientContext
-from office365.sharepoint.files.file import File
-from office365.runtime.client_request_exception import RequestException
-
+from django.http import HttpResponse
 from django.db import connection
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -72,7 +68,6 @@ def cerrar_sesion(request):
     return redirect('iniciar_sesion')
 
 
-
 def registro(request):
     
     return render(request, 'register.html')
@@ -92,11 +87,6 @@ def cambio_contraseña(request):
     
     return render(request, 'changepass.html')
 
-
-
-
-
-from django.http import HttpResponse
 
 def subir_archivo_sharepoint(request):
     if request.method == 'POST' and request.FILES['archivo']:
@@ -123,5 +113,3 @@ def subir_archivo_sharepoint(request):
             return HttpResponse(f"Error uploading file: {e}")
     else:
         return HttpResponse("Archivo no encontrado.")
-
-
