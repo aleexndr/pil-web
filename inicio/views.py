@@ -13,14 +13,16 @@ def usuario_autenticado(request):
     user_id = request.session.get("user_id")
     return user_id is not None
 
+
 def obtener_nombre_usuario(user_id):
     with connection.cursor() as cursor:
-            cursor.execute("SELECT usuario FROM datos WHERE id = %s", [user_id])
-            row = cursor.fetchone()
-            if row:
-                return row[0] 
-            else:
-                return "Usuario Desconocido"
+        cursor.execute("SELECT usuario FROM datos WHERE id = %s", [user_id])
+        row = cursor.fetchone()
+        if row:
+            return row[0] 
+            
+        else:
+            return "Usuario Desconocido"
 
 
 def error_autenticacion(request):
@@ -32,27 +34,24 @@ def iniciar_sesion (request):
         username = request.POST['username']
         password = request.POST['password']
         
-        # Consulta SQL para obtener el usuario
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM datos WHERE usuario = %s AND contrasena = %s", [username, password])
             user = cursor.fetchone()
         
         if user:
-            request.session['user_id'] = user[0]  # Suponiendo que el ID de usuario está en la primera columna de la tabla
+            request.session['user_id'] = user[0]
             return redirect('inicio/')
 
-        error_message = "Credenciales incorrectas. Por favor, intenta nuevamente."
+        error_message = "Acceso denegado. El usuario o la contraseña que proporcionaste no son válidos. Por favor, verifica e intenta de nuevo."
         messages.error(request, error_message)
     
     return render(request, 'login.html')
 
 
 def inicio(request):
-    
     if usuario_autenticado(request):
         user_id = request.session.get('user_id')
         user_name = obtener_nombre_usuario(user_id)
-        
         return render(request, 'index.html', {'user_name': user_name})
     
     else:
@@ -61,10 +60,11 @@ def inicio(request):
 
 def cerrar_sesion(request):
     if usuario_autenticado(request):
-        del request.session['user_id']  # Elimina el usuario de la sesión
+        del request.session['user_id']
         response = redirect('iniciar_sesion')
-        response.delete_cookie('sessionid')  # Elimina la cookie de sesión del lado del cliente
+        response.delete_cookie('sessionid')
         return response
+    
     return redirect('iniciar_sesion')
 
 
@@ -112,4 +112,5 @@ def subir_archivo_sharepoint(request):
             print(f"Error uploading file: {e}")
             return HttpResponse(f"Error uploading file: {e}")
     else:
+        
         return HttpResponse("Archivo no encontrado.")

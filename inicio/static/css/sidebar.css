@@ -11,6 +11,8 @@ body{
  min-height: 100vh;
  background: #E4E9F7
 }
+
+
 /* ---------- SIDEBAR ----------*/
 .page-container{
   position: relative;
@@ -120,10 +122,11 @@ body{
 
 .close-btn{
  position: absolute;
+ padding: 5px;
  color: #fff;
- font-size: 20px;
+ font-size: 22px;
  right: 0;
- margin: 25px;
+ margin: 15px;
  cursor: pointer;
 }
 
@@ -139,10 +142,11 @@ body{
 
 /* ---------- CONTENIDO DE LA PAGINA ---------- */
  .menu-btn{
-  position: relative;
   color: #11101d;
-  font-size: 20px;
-  margin: 10px 20px;
+  position: relative;
+  font-size: 22px;
+  margin: 0px 20px;
+  padding: 5px;
   cursor: pointer;
  }
 
@@ -153,14 +157,21 @@ body{
  }
 
 
- .content .user{
-  position: absolute;
-  top: 0;
-  right: 0;
-  margin: 20px;
+  .user{
+  position: relative;
+  margin: 0px 20px;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+ }
+
+ .header-custom{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
  }
 
  .content .user .user-img{
@@ -177,7 +188,7 @@ body{
  }
  
  .content .name{
-  color: #fff;
+  color: #11101d;
   font-size: 16px;
   font-weight: 400;
   flex-wrap: wrap;

@@ -21,36 +21,46 @@
         {% csrf_token %}
         
         <div class="input-group flex-nowrap">
-          <span class="input-group-text icon-custom"><i class="fa-solid fa-user"></i></span>
+          <div class="input-group-text icon-custom">
+            <i class="fa-solid fa-user"></i>
+          </div>
           <input type="text" class="input-box" name="username" placeholder="Usuario" required autocomplete="off">
           <span class="underline"></span>
         </div>
   
         <div class="input-group flex-nowrap contraseña">
-          <span class="input-group-text icon-custom"><i class="fa-solid fa-lock"></i></span>
-          <input type="password" class="input-box" placeholder="Contraseña" name="password" required>
+          <div class="input-group-text icon-custom">
+            <i class="fa-solid fa-lock"></i>
+          </div>
+          <input type="password" class="input-box" placeholder="Contraseña" name="password" id="password" required>
           <span class="underline"></span>
+          <div class="input-group-text eye">
+            <i type="button" class="fa-solid fa-eye show-hide-btn" onclick="togglePasswordVisibility()"></i>
+          </div>
         </div>
 
         <div class="links-pass">
           <a href="{% url 'recuperar_contraseña' %}">¿Olvidaste tu contraseña?</a>
         </div>
+
+        {% if messages%}
         <div id="error-message" class="alert-custom">
           {% for message in messages %}
             {{ message }}
           {% endfor %}
         </div>
+        {% endif %}
 
         <button type="submit" class="btn btn-primary boton-login" name="submit-button">INICIAR SESION</button>
         
       </form>
-      
-
-      <div id="error-message" class="alert-custom"></div>
 
       <div class="links-register">
         <a href="{% url 'registro' %}">¿Aun no tienes una cuenta? Registrate!</a>
       </div>
     </div>
+
+    
+      <script src="../static/js/login.js"></script>
   </body>
 </html>

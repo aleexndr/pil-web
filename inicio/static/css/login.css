@@ -47,6 +47,15 @@ body {
     border-bottom: solid #ccc 1px;
 }
 
+.eye {
+    background-color: transparent;
+    border: 0;
+    border-radius: 0;
+    font-size: 17px;
+    color: #fff;
+    border-bottom: solid #ccc 1px;
+}
+
 .contraseña {
     margin-top: 15px;
 }
@@ -128,5 +137,14 @@ body {
 }
 
 .links-pass a:hover {
+    color: #fff;
+}
+
+.alert-custom {
+    margin-block: 10px;
+    padding: 10px;
+    border: solid 2px rgb(156, 27, 27);
+    border-radius: 10px;
+    background-color: rgba(95, 24, 36, 0.3);
     color: #fff;
 }
