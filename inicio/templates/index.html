@@ -4,7 +4,8 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Index</title>
-   <link rel="stylesheet" href="../static/css/sidebar.css">
+   <link rel="stylesheet" href="../static/css/index.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
    <script src="https://kit.fontawesome.com/fffb8e8912.js" crossorigin="anonymous"></script>
  </head>
   <body>
@@ -24,7 +25,7 @@
    
         <div class="menu">
           <div class="item">
-            <a href="#"><i class="fa-solid fa-house-chimney"></i><span>INICIO</span></a>
+            <a href=""><i class="fa-solid fa-house-chimney"></i><span>INICIO</span></a>
           </div>
           <div class="item">
             <a class="sub-btn"><i class="fa-solid fa-user-group"></i><span>RR.HH</span><i class="fa-solid fa-angle-up arrow"></i></a>
@@ -102,13 +103,48 @@
 
       <h1>HOLA MUNDO</h1>
 
-      <form action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data">
+      <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="file" name="archivo" id="archivo">
         <input type="submit" value="Subir archivo">
       </form>
     </div>
 
-    <script src="../static/js/sidebar.js"></script>
+      <div id="loader" class="loader-container">
+        <div class="loader">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <p>Cargando...</p>
+      </div>
+
+      <!-- <div id="mensaje" class="hidden">
+        <div class="mensaje-container">
+            <div class="icon-container">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="text-container">
+                {{ mensaje }}
+            </div>
+        </div>
+      </div> -->
+
+      <!-- <script>
+        // Muestra el mensaje y le aplica estilos usando JavaScript
+        window.onload = function() {
+            var mensajeElement = document.getElementById("mensaje");
+            if (mensajeElement.innerText !== "") {
+                mensajeElement.style.display("block");
+                setTimeout(function() {
+                    mensajeElement.style.display("none");
+                }, 2000); // Oculta el mensaje después de 2 segundos
+            }
+        };
+    </script> -->
+    
+
+    <script src="../static/js/index.js"></script>
  </body>
 </html>
