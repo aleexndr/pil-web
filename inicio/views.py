@@ -30,40 +30,6 @@ def error_autenticacion(request):
     return render(request, "autherror.html")
 
 
-# def generar_salt():
-#     return os.urandom(16).hex()
-
-
-# def hash_con_salt(password, salt):
-#     hased_password = hashlib.sha256((password + salt).encode()).hexdigest()
-#     return hased_password
-
-# def iniciar_sesion(request):
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         password = request.POST['password']
-        
-#         # Genera un nuevo salt para cada usuario
-#         salt = generar_salt()
-        
-#         # Hashea la contraseña ingresada con el salt
-#         hashed_password = hash_con_salt(password, salt)
-        
-#         with connection.cursor() as cursor:
-#             cursor.execute("SELECT * FROM datos WHERE usuario = %s", [username])
-#             user = cursor.fetchone()
-            
-#             # Verifica si el usuario existe y si la contraseña coincidida (usando el salt)
-#             if user and user[2] == hash_con_salt(password, user[1]):
-#                 request.session['user_id'] = user[0]
-#                 return redirect('inicio/')
-        
-#         error_message = "Acceso denegado. El usuario o la contraseña que proporcionaste no son válidos. Por favor, verifica e intenta de nuevo."
-#         messages.error(request, error_message)
-    
-#     return render(request, 'login.html')
-
-
 def iniciar_sesion (request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -144,10 +110,17 @@ def subir_archivo_sharepoint(request):
             ctx.load(target_file)
             ctx.execute_query()
             
+            success_message = "Su archivo se subio correctamente."
+            messages.success(request, success_message)
+            
             return redirect('inicio')
             
         except Exception as e:
-            return HttpResponse(f"Error uploading file: {e}")
+            
+            error_message = "El archivo que selecciono ya se ha subido."
+            messages.error(request, error_message)
+            
+            return redirect('inicio')
     else:
         
         return HttpResponse("Archivo no encontrado.")

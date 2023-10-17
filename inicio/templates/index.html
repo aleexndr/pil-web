@@ -110,6 +110,25 @@
       </form>
     </div>
 
+    {% if messages %}
+      {% for message in messages %}
+        {% if message.tags == 'success' %}
+          <div id="success_message" class="success-custom">
+            <i class="fa-regular fa-circle-check"></i>
+            <div class="progress-bar"></div>
+            {{ message }}
+          </div>
+        {% elif message.tags == 'error' %}
+          <div id="error_message" class="error-custom">
+            <i class="fa-regular fa-circle-xmark"></i>
+            <div class="progress-bar"></div>
+            {{ message }}
+          </div>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+    
+
       <div id="loader" class="loader-container">
         <div class="loader">
           <div></div>
@@ -119,30 +138,6 @@
         </div>
         <p>Cargando...</p>
       </div>
-
-      <!-- <div id="mensaje" class="hidden">
-        <div class="mensaje-container">
-            <div class="icon-container">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <div class="text-container">
-                {{ mensaje }}
-            </div>
-        </div>
-      </div> -->
-
-      <!-- <script>
-        // Muestra el mensaje y le aplica estilos usando JavaScript
-        window.onload = function() {
-            var mensajeElement = document.getElementById("mensaje");
-            if (mensajeElement.innerText !== "") {
-                mensajeElement.style.display("block");
-                setTimeout(function() {
-                    mensajeElement.style.display("none");
-                }, 2000); // Oculta el mensaje después de 2 segundos
-            }
-        };
-    </script> -->
     
 
     <script src="../static/js/index.js"></script>

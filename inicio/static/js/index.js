@@ -61,3 +61,18 @@ document.addEventListener("DOMContentLoaded", function() {
         ocultarSpinner();
     });
 });
+
+
+//MENSAJES DE CONFIRMACION PARA ENVIO DE ARCHIVO
+function hideMessages() {
+    const progressBars = document.querySelectorAll('.progress-bar');
+
+    setTimeout(() => {
+        progressBars.forEach((progressBar) => {
+                progressBar.parentElement.style.display = 'none';
+        });
+    }, 3930);
+}
+
+window.onload = hideMessages;
+
