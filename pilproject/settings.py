@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'pilproject.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "BDALEJO",
-        "USER": "alejo",
-        "PASSWORD": "Core5050$",
+        "NAME": "ATLAS",
+        "USER": "adminAtlas",
+        "PASSWORD": "C#3ntvI2ion96$$",
         "HOST": "SRVPIL",
         "PORT": "1433",
         "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
