@@ -20,7 +20,7 @@ def usuario_autenticado(request):
 
 def obtener_nombre_usuario(user_id):
     with connection.cursor() as cursor:
-        cursor.execute("SELECT CorreoCorporativo FROM [ATLAS].[dbo].[P01ListaTrabajadores] WHERE idTrabajador = %s", [user_id])
+        cursor.execute("SELECT Paterno + ' ' + Materno + ' ' + Nombres AS NombreCompleto FROM [ATLAS].[dbo].[P01ListaTrabajadores] WHERE idTrabajador = %s", [user_id])
         row = cursor.fetchone()
         if row:
             return row[0] 
@@ -42,8 +42,7 @@ def iniciar_sesion (request):
             with connection.cursor() as cursor:
                 
                 combined_string = username + password
-                hashed_password = hashlib.sha256(combined_string.encode()).digest()
-                
+                hashed_password = hashlib.sha256(combined_string.encode()).digest()                
                 
                 cursor.execute("SELECT idTrabajador FROM [ATLAS].[06].[00Credenciales] WHERE Pass = %s ", {hashed_password})
                 
