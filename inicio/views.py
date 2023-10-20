@@ -84,8 +84,50 @@ def cerrar_sesion(request):
 
 
 def registro(request):
+    error_message = None
     
-    return render(request, 'register.html')
+    if request.method == 'POST':
+        appaterno = request.POST['appaterno'].upper()
+        apmaterno = request.POST['apmaterno'].upper()
+        name = request.POST['name'].upper()
+        dni = request.POST['dni']
+        date = request.POST['date']
+        username = request.POST['username']
+        password = request.POST['password']
+
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT idTrabajador FROM [ATLAS].[dbo].[P01ListaTrabajadores] WHERE [Num Doc] = %s AND Paterno = %s AND Materno = %s AND Nombres = %s AND CAST(fecNacimiento AS DATE) = %s", [dni, appaterno, apmaterno, name, date])
+            
+            row = cursor.fetchone()
+
+            if row:
+                id_trabajador = row[0]
+
+                cursor.execute("SELECT COUNT(idTrabajador) FROM [ATLAS].[06].[00Credenciales] WHERE idTrabajador = %s", [id_trabajador])
+                
+                num_rep = cursor.fetchone()[0]
+
+                if num_rep == 0:
+                    combined_string = username + password
+                    hashed_password = hashlib.sha256(combined_string.encode()).digest()
+
+                    cursor.execute("INSERT INTO [ATLAS].[06].[00Credenciales] (idTrabajador, Pass) VALUES (%s, %s)", [id_trabajador, hashed_password])
+
+                    return render(request, 'registerconfirmation.html', {
+                        'paterno': appaterno,
+                        'materno': apmaterno,
+                        'nombre': name
+                    })
+                else:
+                    error_message = "Usuario ya registrado."
+            else:
+                error_message = "No se encontró el usuario."
+    
+    return render(request, 'register.html', {'error_message': error_message})
+
+# def registro_confirmacion(request):
+    
+#     return render(request, 'registerconfirmation.html')
 
 
 def recuperar_contraseña(request):

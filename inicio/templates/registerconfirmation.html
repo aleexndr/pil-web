@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verificar codigo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/fffb8e8912.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/css/registerconfirmation.css">
+
+
+  </head>
+  <body class="fondo">
+    
+    <div class="total">
+      <div class="content">
+
+        <i class="fa-regular fa-circle-check"></i>
+        <h4>¡Bienvenido, {{ nombre }} {{ paterno }}! Tu contraseña se ha creado correctamente </h4>
+
+        <form action="{% url 'iniciar_sesion' %}" class="form" id="verify" name="verify">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary boton-verify" name="submit">INICIAR SESION</button>
+        </form>
+
+      </div>
+    </div>
+
+  </body>
+</html>

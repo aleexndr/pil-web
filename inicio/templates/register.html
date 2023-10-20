@@ -40,7 +40,7 @@
         </div>
 
         <div class="input-group space">
-          <input type="text" class="input-box" name="dni" placeholder="N° Documento" required autocomplete="off">
+          <input type="text" class="input-box" name="dni" id="dni" placeholder="N° Documento" required autocomplete="off">
           <span class="underline"></span>
         </div>
 
@@ -49,10 +49,8 @@
           <span class="underline"></span>
         </div>
       
-      
-
         <div class="input-group space">
-          <input type="text" class="input-box" name="username" placeholder="Usuario" required autocomplete="off">
+          <input type="text" class="input-box  username" name="username" id="username" placeholder="Usuario" required autocomplete="off" readonly>
           <span class="underline"></span>
         </div>
   
@@ -60,6 +58,12 @@
           <input type="password" class="input-box" placeholder="Contraseña" name="password" required>
           <span class="underline"></span>
         </div>
+
+        {% if error_message %}
+          <div class="error-message alert-custom">
+            {{ error_message }}
+          </div>
+        {% endif %}
 
         <button type="submit" class="btn btn-primary boton-register" name="submit">REGISTRARME</button>
       </form>
