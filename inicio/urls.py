@@ -18,5 +18,7 @@ urlpatterns = [
     
     path('subir_archivo_sharepoint/',views.subir_archivo_sharepoint, name='subir_archivo_sharepoint'),
     
-    path('cambio_contraseña/', views.cambio_contraseña, name='cambio_contraseña')
+    path('cambio_contraseña/', views.cambio_contraseña, name='cambio_contraseña'),
+    
+    path('verificacion/', views.verificacion, name='verificacion')
 ]

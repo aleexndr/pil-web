@@ -21,16 +21,23 @@
         <p>Te has verificado correctamente ya puedes cambiar tu contraseña</p>
 
       <form action="" method="POST" class="form" id="changepass" name="changepass">
+        {% csrf_token %}
         
         <div class="input-group">
-            <input type="password" class="input-box" name="newpass" id="newpass" placeholder="Nueva contraseña" required>
+            <input type="password" class="input-box" name="newpass" placeholder="Nueva contraseña" required>
             <span class="underline"></span>
         </div>
 
         <div class="input-group space">
-            <input type="password" class="input-box" name="confirmnewpass" id="confirmnewpass" placeholder="Confirmar nueva contraseña" required>
+            <input type="password" class="input-box" name="confirmnewpass" placeholder="Confirmar nueva contraseña" required>
             <span class="underline"></span>
         </div>
+
+        {% if error_message %}
+          <div class="alert-custom">
+          {{ error_message }}
+          </div>
+        {% endif %}
 
         <button type="submit" class="btn btn-primary boton-changepass" name="submit" id="changepass">CONFIRMAR</button>
       </form>

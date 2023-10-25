@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,8 +40,6 @@ INSTALLED_APPS = [
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
-
-
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 
@@ -60,7 +59,7 @@ ROOT_URLCONF = 'pilproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'inicio/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

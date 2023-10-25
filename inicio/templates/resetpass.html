@@ -20,7 +20,8 @@
           <img src="../static/img/logo_pil.png" alt="logo-pil">
         </div>
         <h3>Recuperar contraseña</h3>
-      <form action="" method="POST" class="form" id="resetpass" name="resetpass">
+
+      <form action="{% url 'recuperar_contraseña' %}" method="POST" class="form" id="resetpass" name="resetpass">
         
         {% csrf_token %}
         <div class="datos space">
@@ -49,6 +50,13 @@
           <input type="text" class="input-box" id="date" name="date" placeholder="Fecha de Nacimiento" required autocomplete="off">
           <span class="underline"></span>
         </div>
+
+        {% if error_message %}
+          <div class="alert-custom">
+          {{ error_message }}
+          </div>
+        {% endif %}
+
 
         <button type="submit" class="btn btn-primary boton-auth" name="submit">AUTENTICAR</button>
       </form>

@@ -19,13 +19,20 @@
         <p>Se le ha enviado un codigo de verificacion a su correo.</p>
       <form action="" method="POST" class="form" id="verify" name="verify">
         
+        {% csrf_token %}
         <div class="input-group space">
-          <input type="text" class="input-box" name="verifycode" id="" placeholder="Ingresar su codigo de verificacion" required autocomplete="off">
+          <input type="text" class="input-box" name="verifycode" placeholder="Ingresar su codigo de verificacion" required autocomplete="off">
           <span class="underline"></span>
         </div>
 
+        {% if error_message %}
+          <div class="alert-custom">
+          {{ error_message }}
+          </div>
+        {% endif %}
+
         <button type="submit" class="btn btn-primary boton-verify" name="submit">VERIFICAR</button>
       </form>
-    </div>
+    </div>      
   </body>
 </html>
