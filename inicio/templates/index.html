@@ -10,7 +10,7 @@
  </head>
   <body>
 
-    <!-- SIDEBAR -->
+    <!-- BARRA LATERAL -->
 
     <div class="page-container">
       <div class="side-bar">
@@ -36,14 +36,14 @@
                 <a href="#" class="sub-item"><span>PUESTOS</span></a>
                 <a href="#" class="sub-item"><span><span>KPI</span></span></a>
               </div>
-              <a href="#" class="sub-btn2"><span>DOCUMENTOS</span><i class="fa-solid fa-angle-up arrow2"></i></a>
-              <div class="sub-menu2">
+              <a href="{% url 'solicitudes' %}" class="sub-item"><span>SOLICITUDES</span></a>
+              <!-- <div class="sub-menu2">
                 <a href="#" class="sub-item"><span>VACACIONES</span></a>
                 <a href="#" class="sub-item"><span>PERMISOS</span></a>
                 <a href="#" class="sub-item"><span>LICENCIAS</span></a>
                 <a href="#" class="sub-item"><span>FALTAS</span></a>
                 <a href="#" class="sub-item"><span>SEGUIMIENTO</span></a>
-              </div>
+              </div> -->
               <a href="#" class="sub-item"><span>REPORTES</span></a>
             </div>
           </div>
@@ -110,17 +110,25 @@
       </form>
     </div>
 
+
+    <!-- NOTIFICACIONES -->
     {% if messages %}
       {% for message in messages %}
         {% if message.tags == 'success' %}
           <div id="success_message" class="success-custom">
-            <i class="fa-regular fa-circle-check"></i>
+            <i class="fa-solid fa-circle-check"></i>
             <div class="progress-bar"></div>
             {{ message }}
           </div>
         {% elif message.tags == 'error' %}
           <div id="error_message" class="error-custom">
-            <i class="fa-regular fa-circle-xmark"></i>
+            <i class="fa-solid fa-circle-xmark"></i>
+            <div class="progress-bar"></div>
+            {{ message }}
+          </div>
+        {% else %}
+          <div id="info_message" class="info-custom">
+            <i class="fa-solid fa-circle-info"></i>
             <div class="progress-bar"></div>
             {{ message }}
           </div>
@@ -129,16 +137,35 @@
     {% endif %}
     
 
-      <div id="loader" class="loader-container">
-        <div class="loader">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-        <p>Cargando...</p>
+
+    <!-- PANTALLA DE CARGA -->
+    <div id="loader" class="loader-container">
+      <div class="loader">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
-    
+      <p>Cargando...</p>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+    $('#solicitudes-link').on('click', function(event) {
+        event.preventDefault();
+        var url = '/static/templates/inicio/solicitudes.html'; // Asegúrate de proporcionar la ruta correcta
+        $('.content').load(url);
+    });
+});
+
+
+      // $(document).ready(function() {
+      //   $('.item a[href="#"]').on('click', function(event) {
+      //     event.preventDefault();
+      //     $('.content').load(url);
+      //   });
+      // });
+    </script>
 
     <script src="../static/js/index.js"></script>
  </body>

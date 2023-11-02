@@ -317,11 +317,13 @@ def subir_archivo_sharepoint(request):
                 return redirect('inicio')
                 
         except MultiValueDictKeyError:
-            error_message = "Por favor, seleccione un archivo antes de intentar subirlo."
-            messages.error(request, error_message)
+            info_message = "Por favor, seleccione un archivo antes de intentar subirlo."
+            messages.info(request, info_message)
             return redirect('inicio')
         
     else:
-        error_message = "Por favor, seleccione un archivo antes de intentar subirlo."
-        messages.error(request, error_message)
         return redirect('inicio')
+    
+    
+def solicitudes(request):
+    return render(request, 'inicio/solicitudes.html')

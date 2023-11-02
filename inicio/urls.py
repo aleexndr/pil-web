@@ -20,5 +20,7 @@ urlpatterns = [
     
     path('cambio_contraseña/', views.cambio_contraseña, name='cambio_contraseña'),
     
-    path('verificacion/', views.verificacion, name='verificacion')
+    path('verificacion/', views.verificacion, name='verificacion'),
+    
+    path('solicitudes/', views.solicitudes, name='solicitudes'),
 ]

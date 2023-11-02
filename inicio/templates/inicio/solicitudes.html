@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/fffb8e8912.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../static/css/inicio/solicitudes.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+<body>
+    <div class="contenedor">
+        <h2 class="titulo">Solicitudes futuras</h2>
+
+        <div class="opciones">
+            <p>Proximas(0)</p>
+            <p>Anteriores</p>
+        </div>
+
+        <hr>
+
+        <div class="info">
+            <div class="available">
+                <button href="" class="button">
+                    <div class="capsul">
+                        <i class="fa-regular fa-calendar"></i>
+                        <div class="sub-info">
+                            <span>Vacaciones disponibles</span>
+                            <span>27 de 6 dias</span>
+                        </div>
+                    </div>
+                </button>
+
+                <button href="" class="button">
+                    <div class="capsul">
+                        <i class="fa-regular fa-calendar"></i>
+                        <div class="sub-info">
+                            <span>Dias disponibles</span>
+                            <span>0 de 0 dias</span>
+                        </div>
+                    </div>
+                </button>
+            </div>
+            
+            <button class="button-create" id="modalBtn">CREAR SOLICITUD</button>
+        </div>
+        
+        <div class="card">
+            <div class="card-body principal">
+                <div class="sticker">¡GOZADO!</div>
+                <div class="info-card">
+                    <span class="title-type">SOLICITUD DE REGULARIZACION DE FALTAS</span>
+                    <div class="fechas-targetas">
+                        <span>Inicio: 2023/12/25</span>
+                        <span>Fin: 2024/01/30</span>
+                        <span>Días: 36</span>
+                    </div>
+
+                    <div class="buttons-cards">
+                        <button class="edit-card"><i class="fa-solid fa-pen-to-square" title="Editar"></i></button>
+                        <button class="delete-card"><i class="fa-solid fa-trash-can" title="Eliminar"></i></button>
+                        <button class="show-card"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                </div>
+
+                <div class="progress-sections">
+                    <span class="issued">Emitido</span>
+                    <span class="validated">Validado</span>
+                    <span class="approved">Aprobado</span>
+                    <span class="ticket-issued">Boleta emitida</span>
+                    <span class="ticket-signed">Boleta firmada</span>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body principal">
+                <div class="sticker">¡GOZADO!</div>
+                <div class="info-card">
+                    <span class="title-type">SOLICITUD DE REGULARIZACION DE FALTAS</span>
+                    <div class="fechas-targetas">
+                        <span>Inicio: 2023/12/25</span>
+                        <span>Fin: 2024/01/30</span>
+                        <span>Días: 36</span>
+                    </div>
+                    <div class="buttons-cards">
+                        <button class="edit-card"><i class="fa-solid fa-pen-to-square"></i></button>
+                        <button class="delete-card"><i class="fa-solid fa-trash-can"></i></button>
+                        <button class="show-card"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                </div>
+                <!-- <div class="progress blue">
+                    <span class="progress-left">
+                        <span class="progress-bar"></span>
+                    </span>
+                    <span class="progress-right">
+                        <span class="progress-bar"></span>
+                    </span>
+                    <div class="progress-value">90%</div>
+                </div> -->
+                <div class="progress-sections">
+                    <span class="issued">Emitido</span>
+                    <span class="validated">Validado</span>
+                    <span class="approved">Aprobado</span>
+                    <span class="ticket-issued">Boleta emitida</span>
+                    <span class="ticket-signed">Boleta firmada</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="myModal" class="hidden">
+            <div class="modal-content">
+                
+                <div class="select-content">
+                    <div class="sub-title">
+                        <span class="close"><i class="fa-solid fa-xmark"></i></span>
+                        <h4 class="text-center">Crear una solicitud</h4>
+                    </div>
+                    
+                    <div class="choose">
+                        <span>Tipo de solicitud</span>
+                        <select name="" id="miSelect" class="form-select">
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="vacaciones">SOLICITUD DE VACACIONES REGULARES</option>
+                            <!-- <option value="faltas">SOLICITUD DE REGULARIZACIÓN DE FALTAS</option>
+                            <option value="permiso">SOLICITUD DE PERMISO</option> -->
+                            <option value="descanso">SOLICITUD DE DESCANSO MEDICO</option>
+                            <option value="licencia">SOLICITUD DE LICENCIA</option>
+                            <option value="licencia">VENTA DE VACACIONES</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- VACACIONES -->
+                <div class="hidden vacaciones-option">
+                    <div class="notification">
+                        <span>Vacaciones: 27 dias disponibles</span>
+                    </div>
+    
+                    <div class="period">
+                        <div class="periods">
+                            <div class="period-start input-group-sm">
+                                <span>Inicio Periodo:</span>
+                                <input type="text" class="form-control"> <!-- id="date1" -->
+                            </div>
+                            <div class="period-end input-group-sm">
+                                <span>Fin Periodo:</span>
+                                <input type="text" class="form-control"> <!-- id="date2" -->
+                            </div> 
+                            <div class="total-days input-group-sm">
+                                <span>Dias:</span>
+                                <input type="text" class="form-control" disabled>
+                            </div>               
+                        </div>
+                        <div class="authorizers-vacaciones input-group-sm">
+                            <span>Responsable(s) de autorizacion:</span>
+                            <input type="text" class="form-control" disabled>
+                        </div>
+                        <div class="signature-vacaciones form-switch">
+                            <input type="checkbox" class="form-check-input">
+                            <span>Autorización de Firma Digital</span>
+                        </div>
+                    </div>
+                    
+                    <div class="buttons-vacaciones">
+                        <button class="btn btn-danger">Cancelar</button>
+                        <button class="btn btn-primary">Crear</button>
+                    </div>
+                </div>
+
+
+                <!-- LICENCIA -->
+                <div class="hidden licencia-option">
+                    <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="period">
+                            <div class="periods">
+                                <div class="period-start input-group-sm">
+                                    <span>Inicio Periodo:</span>
+                                    <input type="text" class="form-control"> <!-- id="date3" -->
+                                </div>
+                                <div class="period-end input-group-sm">
+                                    <span>Fin Periodo:</span>
+                                    <input type="text" class="form-control"> <!-- id="date4" --> 
+                                </div> 
+                                <div class="total-days input-group-sm">
+                                    <span>Dias:</span>
+                                    <input type="text" class="form-control" disabled>
+                                </div>               
+                            </div>
+    
+                            <div class="type-license">
+                                <span>Tipo de Licencia</span>
+    
+                                <select name="" id="typelicense" class="form-select form-select-sm">
+                                    <option value="" disabled selected>Selecciona una opción</option>
+                                    <option value="con" >LICENCIA CON GOCE DE HABER</option>
+                                    <option value="sin">LICENCIA SIN GOCE DE HABER</option>
+                                </select>
+                            </div>
+    
+                            <div class="license-detail">
+                                <span>Detalle de Licencia</span>
+    
+                                <select name="" id="licensedetail" class="form-select form-select-sm">
+                                    <option value="" disabled selected>Selecciona una opción</option>
+                                    <option class="hidden" id="maternidad">LICENCIA POR MATERNIDAD</option>
+                                    <option class="hidden" id="paternidad">LICENCIA POR PATERNIDAD</option>
+                                    <option class="hidden" id="familiar">FALLECIMIENTO DE FAMILIAR</option>
+                                    <option class="hidden" id="otros1">OTROS</option>
+                                    <option class="hidden" id="estudios">ESTUDIOS</option>
+                                    <option class="hidden" id="tramites">TRAMITES DIVERSOS</option>
+                                    <option class="hidden" id="personales">MOTIVOS PERSONALES</option>
+                                    <option class="hidden" id="salud">PROBLEMAS DE SALUD</option>
+                                    <option class="hidden" id="otros2">OTROS</option>
+                                </select>
+                            </div>
+    
+                            <div class="request-details-license input-group-sm form-floating">
+                                <span>Descripción de la Solicitud:</span>
+                                <textarea contenteditable="true" class="form-control"></textarea>
+                            </div>
+    
+                            <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <input type="file" name="archivo" id="archivo">
+                                <input type="submit" value="Subir archivo">
+                            </form>
+    
+                            <div class="authorizers-license input-group-sm">
+                                <span>Responsable(s) de autorizacion:</span>
+                                <input type="text" class="form-control" disabled>
+                            </div>
+                            <div class="signature-license form-switch">
+                                <input type="checkbox" class="form-check-input">
+                                <span>Autorización de Firma Digital</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="buttons-license">
+                        <button class="btn btn-danger">Cancelar</button>
+                        <button class="btn btn-primary">Crear</button>
+                    </div>
+                </div>
+
+
+                
+                <!-- FALTAS -->
+                <div class="hidden faltas-option">
+                    <div class="notification">
+                        <span>Vacaciones: 27 dias disponibles</span>
+                    </div>
+                    <div class="period">
+                        <div class="periods">
+                            <div class="period-start input-group-sm">
+                                <span>Inicio Periodo:</span>
+                                <input type="date" class="form-control"> <!-- id="date5" -->
+                            </div>
+                            <div class="period-end input-group-sm">
+                                <span>Fin Periodo:</span>
+                                <input type="date" class="form-control"> <!-- id="date6" -->
+                            </div> 
+                            <div class="total-days input-group-sm">
+                                <span>Dias:</span>
+                                <input type="text" class="form-control" disabled>
+                            </div>
+                            <div class="total-days input-group-sm">
+                                <span>Horas:</span>
+                                <input type="text" class="form-control" disabled>
+                            </div>            
+                        </div>
+
+                        <div class="type-faltas">
+                            <span>Compensar Faltas por:</span>
+
+                            <select class="form-select form-select-sm">
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option>CON VACACIONES</option>
+                                <option>CON SUELDO</option>
+                            </select>
+                        </div>
+
+                        <div class="faltas-detail">
+                            <span>Causas de las faltas:</span>
+
+                            <select class="form-select form-select-sm">
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option>INASISTENCIA</option>
+                                <option>JORNADA LABORAL INCOMPLETA</option>
+                                <option>OTROS</option>
+                            </select>
+                        </div>
+
+                        <div class="request-details-faltas input-group-sm form-floating">
+                            <span>Descripción de la Solicitud:</span>
+                            <textarea contenteditable="true" class="form-control"></textarea>
+                        </div>
+                        <div class="authorizers-faltas input-group-sm">
+                            <span>Responsable(s) de autorizacion:</span>
+                            <input type="text" class="form-control" disabled>
+                        </div>
+                        <div class="signature-faltas form-switch">
+                            <input type="checkbox" class="form-check-input">
+                            <span>Autorización de Firma Digital</span>
+                        </div>
+                    </div>
+                    
+                    <div class="buttons-faltas">
+                        <button class="btn btn-danger">Cancelar</button>
+                        <button class="btn btn-primary">Crear</button>
+                    </div>
+                </div>
+
+
+                <!-- DESCANSO -->
+                <div class="hidden descanso-option">
+                    <div class="period">
+                        <div class="periods">
+                            <div class="period-start input-group-sm">
+                                <span>Inicio Periodo:</span>
+                                <input type="date" id="date3" class="form-control">
+                            </div>
+                            <div class="period-end input-group-sm">
+                                <span>Fin Periodo:</span>
+                                <input type="date" id="date4" class="form-control">    
+                            </div> 
+                            <div class="total-days input-group-sm">
+                                <span>Dias:</span>
+                                <input type="text" class="form-control" disabled>
+                            </div>           
+                        </div>
+
+                        <div class="type-descanso">
+                            <span>Causas de las faltas:</span>
+
+                            <select class="form-select form-select-sm">
+                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option>ENFERMEDAD</option>
+                                <option>ACCIDENTE</option>
+                                <option>OTROS</option>
+                                <option>COVID-19</option>
+                            </select>
+                        </div>
+
+                        <!-- <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="file" name="archivo" id="archivo" class="subir-archivo">
+                            <input type="submit" value="Subir archivo" class="subir-archivo-success">
+                        </form> -->
+                        
+                        <div class="authorizers-descanso input-group-sm">
+                            <span>Responsable(s) de autorizacion:</span>
+                            <input type="text" class="form-control" disabled>
+                        </div>
+                        <div class="signature-descanso form-switch">
+                            <input type="checkbox" class="form-check-input">
+                            <span>Autorización de Firma Digital</span>
+                        </div>
+                    </div>
+
+
+                    
+                    <div class="buttons-descanso">
+                        <button class="btn btn-danger">Cancelar</button>
+                        <button class="btn btn-primary">Crear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    <script src="../../static/js/inicio/solicitudes.js"></script>    
+</body>
+</html>

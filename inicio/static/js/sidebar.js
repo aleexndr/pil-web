@@ -36,3 +36,11 @@ const closeBtn = document.querySelector('.close-btn');
 closeBtn.addEventListener('click', function() {
     sideBar.classList.remove('active');
 });
+
+
+$(document).ready(function() {
+    $('.item a[href="#"]').on('click', function(event) {
+      event.preventDefault();
+      $('.content').load('../templates/inicio/solicitudes.html');
+    });
+  });
