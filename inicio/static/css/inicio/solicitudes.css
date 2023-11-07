@@ -118,12 +118,15 @@ body{
 }
 
 .modal-content {
-    background-color: #fff;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #fff;
     padding: 15px;
     margin: 20px;
     border-radius: 10px;
+    max-height: 95%;
     min-width: 200px;
     max-width: 700px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -146,27 +149,24 @@ body{
 
 
 /*----- FECHAS -----*/
-.sub-title{
-    margin-bottom: 20px;
-}
-
 .choose{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: auto;
-    width: 90%;
+    margin-block: 5px;
+    width: 100%;
 }
 
 .choose select{
-    margin-left: 10px;
-    width: 70%;
+    margin-inline: 10px;
+    width: 100%;
 }
 
 .select-content{
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
 }
 
 .notification{
@@ -174,7 +174,7 @@ body{
     background-color: #E4E9F7;
     border-radius: 5px;
     color: #427FC8;
-    margin: 20px 15px;
+    margin: 10px 15px;
     font-weight: 600;
     box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.3);
     padding: 5px 10px;
@@ -185,8 +185,8 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: auto;
     justify-content: space-between;
-    margin-block: 5px;
     width: 100%;
 }
 
@@ -195,7 +195,6 @@ body{
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    width: 90%;
 }
 
 .period-start{
@@ -225,13 +224,12 @@ body{
 
 
 
-/*----- LICENCIA -----*/
+/*----- VACACIONES -----*/
 .vacaciones-option{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 5px;
     width: 100%;
 }
 
@@ -265,19 +263,122 @@ body{
 }
 
 .buttons-vacaciones button{
-    margin-inline: 20px;
-    width: 40%;
+    margin-inline: 10px;
+    width: 50%;
+}
+
+
+
+/*----- DESCANSO -----*/
+.descanso-option{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    justify-content: space-between;
+    height: 65vh;
+    width: 100%;
+}
+
+.type-descanso{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+    margin-block: 10px;
+    width: 85%;
+}
+
+.request-details-descanso{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+    margin-block: 10px;
+    width: 85%;
+}
+
+.authorizers-descanso{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+    margin-block: 10px;
+    width: 85%;
+}
+
+.signature-descanso{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 85%;
+}
+
+.signature-descanso span{
+    margin-inline: 10px;
+}
+
+.buttons-descanso{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.buttons-descanso button{
+    margin-inline: 10px;
+    width: 50%;
+}
+
+.custom-file{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.custom-file input{
+    display: none;
+}
+
+.custom-file label{
+    display: flex;
+    color: #fff;
+    padding: 5px;
+    font-family: 'Poppins';
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #427FC8;
+    cursor: pointer;
+}
+
+.custom-file label:hover{
+    background-color: #427FC8;
 }
 
 
 
 /*----- LICENCIA -----*/
+.period-licencia{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    justify-content: space-between;
+    height: 65vh;
+    width: 100%;
+}
+
 .licencia-option{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    overflow-y: auto;
     width: 100%;
 }
 
@@ -331,14 +432,14 @@ body{
 }
 
 .buttons-license button{
-    margin-inline: 15px;
-    width: 40%;
+    margin-inline: 10px;
+    width: 50%;
 }
 
 
 
 /*----- FALTAS -----*/
-.faltas-option{
+/* .faltas-option{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -396,75 +497,9 @@ body{
 }
 
 .buttons-faltas button{
-    margin-inline: 15px;
-    width: 40%;
-}
-
-
-
-/*----- DESCANSO -----*/
-.descanso-option{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow-y: auto;
-    width: 100%;
-}
-
-.type-descanso, .descanso-detail{
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: left;
-    text-align: left;
-    margin-block: 5px;
-    width: 85%;
-}
-
-.request-details-descanso{
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: left;
-    text-align: left;
-    margin-block: 5px;
-    width: 85%;
-}
-
-.authorizers-descanso{
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: left;
-    text-align: left;
-    margin-block: 10px;
-    width: 85%;
-}
-
-.signature-descanso{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 85%;
-}
-
-.signature-descanso span{
     margin-inline: 10px;
-}
-
-.buttons-descanso{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-block: 10px;
-    width: 100%;
-}
-
-.buttons-descanso button{
-    margin-inline: 15px;
-    width: 40%;
-}
+    width: 50%;
+} */
 
 
 
@@ -586,35 +621,35 @@ body{
     color: #ffffff;
     font-family: 'Poppins';
     font-weight: 400;
-    background: #b22222
+    background: #4682b4
    }
 
    .validated{
     color: #ffffff;
     font-family: 'Poppins';
     font-weight: 400;
-    background: #e4df31
+    background: #3883c2
    }
 
    .approved{
     color: #ffffff;
     font-family: 'Poppins';
     font-weight: 400;
-    background: #269a30
+    background: #2784d3
    }
 
    .ticket-issued{
     color: #ffffff;
     font-family: 'Poppins';
     font-weight: 400;
-    background: #ec7c26
+    background: #909090
    }
 
    .ticket-signed{
     color: #ffffff;
     font-family: 'Poppins';
     font-weight: 400;
-    background: #4682b4
+    background: #909090
    }
 
    .edit-card{

@@ -4,6 +4,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const fechaInput2 = document.getElementById("date2");
     const fechaInput3 = document.getElementById("date3");
     const fechaInput4 = document.getElementById("date4");
+    const fechaInput5 = document.getElementById("date5");
+    const fechaInput6 = document.getElementById("date6");
+    const fechaInput7 = document.getElementById("date7");
+    const fechaInput8 = document.getElementById("date8");
 
     flatpickr(fechaInput1, {
       dateFormat: "Y/m/d",
@@ -18,6 +22,22 @@ document.addEventListener("DOMContentLoaded", function() {
         placeholder: "Fecha de Nacimiento",
     });
     flatpickr(fechaInput4, {
+        dateFormat: "Y/m/d",
+        placeholder: "Fecha de Nacimiento",
+    });
+    flatpickr(fechaInput5, {
+        dateFormat: "Y/m/d",
+        placeholder: "Fecha de Nacimiento",
+    });
+    flatpickr(fechaInput6, {
+        dateFormat: "Y/m/d",
+        placeholder: "Fecha de Nacimiento",
+    });
+    flatpickr(fechaInput7, {
+        dateFormat: "Y/m/d",
+        placeholder: "Fecha de Nacimiento",
+    });
+    flatpickr(fechaInput8, {
         dateFormat: "Y/m/d",
         placeholder: "Fecha de Nacimiento",
     });

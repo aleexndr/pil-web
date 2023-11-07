@@ -32,7 +32,8 @@ body{
 }
 
 .side-bar{
-  background: linear-gradient(to bottom, #52B6DB, #4178AC, #2B569D);
+ /* background: linear-gradient(to bottom, #52B6DB, #4178AC, #2B569D); */
+ background: #11101d;
  width: 280px;
  height: 100vh;
  position: fixed;
@@ -71,7 +72,7 @@ body{
 }
 
 .side-bar .menu .item a:hover{
- background: #2B569D;
+ background: #1e1d2a;
  transition: 0.3s ease;
 }
 
@@ -156,6 +157,11 @@ body{
   margin: 10px;
  }
 
+ .content-principal{
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+ }
 
   .user{
   position: relative;
@@ -174,12 +180,12 @@ body{
   width: 100%;
  }
 
- .content .user .user-img{
+ .content-principal .user .user-img{
   display: flex;
   align-items: center;
  }
 
- .content .user img{
+ .content-principal .user img{
   height: 40px;
   width: 40px;
   object-fit: cover;
@@ -187,14 +193,14 @@ body{
   background: rgba(29, 27, 49, 1);
  }
  
- .content .name{
+ .content-principal .name{
   color: #11101d;
   font-size: 16px;
   font-weight: 400;
   flex-wrap: wrap;
  }
 
- .content .user i{
+ .content-principal .user i{
   color: #11101d;
   font-size: 20px;
  }

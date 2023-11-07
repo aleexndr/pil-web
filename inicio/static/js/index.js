@@ -75,4 +75,3 @@ function hideMessages() {
 }
 
 window.onload = hideMessages;
-

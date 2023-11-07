@@ -326,4 +326,11 @@ def subir_archivo_sharepoint(request):
     
     
 def solicitudes(request):
-    return render(request, 'inicio/solicitudes.html')
+    
+    if usuario_autenticado(request):
+        user_id = request.session.get('user_id')
+        user_name = obtener_nombre_usuario(user_id)
+        return render(request, 'inicio/solicitudes.html', {'user_name': user_name})
+    
+    else:
+        return redirect('error_autenticacion')
