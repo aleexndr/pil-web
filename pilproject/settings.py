@@ -1,5 +1,8 @@
 from pathlib import Path
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -81,12 +84,12 @@ WSGI_APPLICATION = 'pilproject.wsgi.application'
 # settings.py
 DATABASES = {
     "default": {
-        "ENGINE": "mssql",
-        "NAME": "ATLAS",
-        "USER": "adminAtlas",
-        "PASSWORD": "C#3ntvI2ion96$$",
-        "HOST": "SRVPIL",
-        "PORT": "1433",
+        "ENGINE": os.getenv('ENGINE'),
+        "NAME": os.getenv('NAME'),
+        "USER": os.getenv('USER'),
+        "PASSWORD": os.getenv('PASSDATABASE'),
+        "HOST": os.getenv('HOST'),
+        "PORT": os.getenv('PORT'),
         "OPTIONS": {"driver": "ODBC Driver 17 for SQL Server", 
         },
     },
