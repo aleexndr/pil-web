@@ -16,7 +16,7 @@
         <div class="side-bar">
 
           <div class="logo">
-            <img src="../static/img/logo_pil.png" alt="">
+            <img loading="lazy" src="../static/img/logo_pil.png" alt="">
           </div>
   
           <div class="close-btn">
@@ -96,7 +96,7 @@
         </div>
         <div class="user">
           <div class="user-img">
-            <img src="../static/img/foto_perfil.jpg" alt="imgprofile">
+            <img loading="lazy" src="../static/img/foto_perfil.jpg" alt="imgprofile">
           </div>
           <div class="name">{{ user_name }}</div>
           <a href="{% url 'cerrar_sesion' %}"><i class="fa-solid fa-right-from-bracket"></i></a>
@@ -112,13 +112,15 @@
       <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="file" name="archivo" id="archivo">
+        <input type="hidden" name="next_url" value="{{ request.get_full_path }}">
         <input type="submit" value="Subir archivo">
       </form>
     </div>
-
+    {% endblock %}
 
     <!-- NOTIFICACIONES -->
-    {% if messages %}
+    {% block notification %}
+      {% if messages %}
       {% for message in messages %}
         {% if message.tags == 'success' %}
           <div id="success_message" class="success-custom">
@@ -140,7 +142,7 @@
           </div>
         {% endif %}
       {% endfor %}
-    {% endif %}
+      {% endif %}
     {% endblock %}
 
     {% block loader %}

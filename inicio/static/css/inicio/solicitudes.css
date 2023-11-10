@@ -11,7 +11,8 @@ body{
 }
 
 .contenedor{
-    margin: 20px;
+    max-width: 90%;
+    margin: auto;
 }
 
 .titulo{
@@ -34,7 +35,7 @@ body{
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin: 20px 5px 80px 5px;
+    margin: 30px 5px 40px 5px;
 }
 
 .available{
@@ -102,6 +103,115 @@ body{
     transition: translate 100ms cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 250ms;
 }
 
+.leyenda-progress{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    margin-block: 30px;
+}
+
+.emitido{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.emitido-color{
+    padding: 3px 10px;
+    background: #1e90ff;
+    border: solid 5px #1e90ff;
+    margin-left: 10px;
+}
+
+.validado{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.validado-color{
+    padding: 3px 10px;
+    background: #ff7514;
+    border: solid 5px #ff7514;
+    margin-left: 10px;
+}
+
+.aprobado{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.aprobado-color{
+    padding: 3px 10px;
+    background: #4c9141;
+    border: solid 5px #4c9141;
+    margin-left: 10px;
+}
+
+.boleta-emitida{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.boleta-emitida-color{
+    padding: 3px 10px;
+    background: #ede45b;
+    border: solid 5px #ede45b;
+    margin-left: 10px;
+}
+
+.boleta-firmada{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+}
+
+.boleta-firmada-color{
+    padding: 3px 10px;
+    background: #c6a664;
+    border: solid 5px #c6a664;
+    margin-left: 10px;
+}
+
+.filtro-solicitudes{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: left;
+}
+
+.solicitud-link{
+    margin: 15px 15px 0 0;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+}
+
+.solicitud-link::after{
+    content: '';
+    width: 0;
+    height: 3px;
+    background: #0096d2;
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    transition: 0.5s;
+}
+
+.solicitud-link.active-solicitud::after{
+    width: 70%;
+}
+
+
 
 
 /*----- FORMULARIO -----*/
@@ -123,7 +233,7 @@ body{
     align-items: center;
     justify-content: center;
     background-color: #fff;
-    padding: 15px;
+    padding: 20px;
     margin: 20px;
     border-radius: 10px;
     max-height: 95%;
@@ -140,6 +250,8 @@ body{
     cursor: pointer;
     color: #ccc;
 }
+
+
 
 .close:hover,
 .close:focus {
@@ -178,7 +290,7 @@ body{
     font-weight: 600;
     box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.3);
     padding: 5px 10px;
-    width: 90%;
+    width: 85%;
 }
 
 .period{
@@ -186,6 +298,7 @@ body{
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
+    padding-block: 15px;
     justify-content: space-between;
     width: 100%;
 }
@@ -230,6 +343,7 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow-y: hidden;
     width: 100%;
 }
 
@@ -239,7 +353,7 @@ body{
     align-items: left;
     justify-content: left;
     text-align: left;
-    margin-block: 10px;
+    margin-block: 15px;
     width: 85%;
 }
 
@@ -252,13 +366,14 @@ body{
 }
 
 .signature-vacaciones span{
-    margin: 10px;
+    margin-inline: 10px;
 }
 
 .buttons-vacaciones{
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 15px 0 0 0 ;
     width: 100%;
 }
 
@@ -276,7 +391,6 @@ body{
     align-items: center;
     overflow-y: auto;
     justify-content: space-between;
-    height: 65vh;
     width: 100%;
 }
 
@@ -325,6 +439,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 10px 0 0 0;
     width: 100%;
 }
 
@@ -346,19 +461,36 @@ body{
 
 .custom-file label{
     display: flex;
-    color: #fff;
-    padding: 5px;
-    font-family: 'Poppins';
     align-items: center;
     justify-content: center;
+    text-align: center;
+    color: #fff;
+    padding: 8px 10px;
+    font-family: 'Poppins';
+    font-size: 17px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #427FC8;
+    background-color: #317ed9;
     cursor: pointer;
 }
 
 .custom-file label:hover{
-    background-color: #427FC8;
+    background-color: #1e90ff;
+}
+
+.custom-file label i{
+    margin-right: 5px;
+}
+
+.form-descanso{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.form-descanso label{
+    margin: 5px;
 }
 
 
@@ -370,7 +502,8 @@ body{
     align-items: center;
     overflow-y: auto;
     justify-content: space-between;
-    height: 65vh;
+    padding-block: 10px;
+    height: 60vh;
     width: 100%;
 }
 
@@ -388,7 +521,7 @@ body{
     align-items: left;
     justify-content: left;
     text-align: left;
-    margin-block: 5px;
+    margin-block: 10px;
     width: 85%;
 }
 
@@ -398,7 +531,7 @@ body{
     align-items: left;
     justify-content: left;
     text-align: left;
-    margin-block: 5px;
+    margin-block: 15px;
     width: 85%;
 }
 
@@ -427,13 +560,24 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-block: 10px;
+    margin: 15px 0 0 0;
     width: 100%;
 }
 
 .buttons-license button{
     margin-inline: 10px;
     width: 50%;
+}
+
+.form-license{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.form-license label{
+    margin: 5px;
 }
 
 
@@ -561,15 +705,65 @@ body{
     flex-direction: column;
    }
 
-   .card{
+   .card-custom{
     position: relative;
+    display: flex;
     margin: 40px auto;
-    max-width: 70%;
-    border: solid 3px #269a30;
-    box-shadow: 5px 5px 9px 0px rgba(0, 0, 0, 0.3);
+    padding: 10px 10px 10px 0px;
+    background: #fff;
+    border-radius: 5px;
+	animation: slide-bottom 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
    }
 
-   .sticker{
+   @keyframes slide-bottom {
+    0% {
+      -webkit-transform: translateY(0px);
+              transform: translateY(-40px);
+    }
+    100% {
+      -webkit-transform: translateY(0);
+              transform: translateY(0);
+    }
+  }
+
+   .slide-top{
+    animation: slide-top 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+   }
+
+    @keyframes slide-top {
+        0% {
+          -webkit-transform: translateY(250px);
+                  transform: translateY(250px);
+        }
+        100% {
+          -webkit-transform: translateY(0px);
+                  transform: translateY(0px);
+        }
+      }
+          
+    .float{
+        transition: .5s, color .10s;
+        -webkit-transition: .5s, color .10s;
+        -moz-transition: .5s, color .10s;
+    }
+
+    .float:hover{
+        box-shadow: 0 4px 4px 0 #cccccc;
+        transform: translate(0px,6px);
+        -webkit-transform: translate(0px,6px);
+        -moz-transform:translate(0px,6px);
+    }
+              
+
+   .progress-bar-solicitudes{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    border: solid 5px #1e90ff;
+    border-radius: 5px 0 0 5px;
+   }
+
+   /* .sticker{
     position: absolute;
     top: -25px;
     left: -2.5px;
@@ -577,14 +771,27 @@ body{
     color: white;
     padding: 5px 20px;
     border-radius: 10px 10px 10px 0px;
-    /* transform: rotate(30deg); */
+   } */
+
+   .close-card{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    color: #fff;
+    border: none;
+    background-color: #db0000;
+    padding: 2px 7px;
+    border-radius: 0 4px 0 10px;
    }
 
    .principal{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    width: 100%;
     justify-content: space-between;
+    margin: 10px 10px;
+    padding: 0 20px;
    }
 
    .title-type{
@@ -594,34 +801,31 @@ body{
 
    .fechas-targetas{
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
     align-items: left;
     justify-content: left;
-    margin: 10px;
+    margin-block: 10px;
+   }
+
+   .fechas-targetas span{
+    margin-right: 20px;
    }
 
    .progress-sections{
     display: flex;
-    flex-direction: column;
-    align-items: left;
-    justify-content: space-around;
-    cursor: default;
-    margin: 10px 10px;
-   }
-
-   .progress-sections span{
-    margin: 2px;
-    padding: 3px 20px;
-    border-radius: 20px;
-    text-align: center;
+    align-items: center;
+    justify-content: center;
    }
 
    .issued{
-    color: #ffffff;
+    color: #fff;
     font-family: 'Poppins';
-    font-weight: 400;
-    background: #4682b4
+    font-weight: 500;
+    background: #008080;
+    padding: 5px 15px;
+    border-radius: 3px;
+    border: none;
+    width: 100%;
    }
 
    .validated{
@@ -652,49 +856,20 @@ body{
     background: #909090
    }
 
-   .edit-card{
-    color: #fafbfd;
-    font-size: 20px;
-    background: #dcc741;
-    border: none;
-    border-radius: 5px;
-    padding: 6px 11px;
-   }
+   @media (max-width: 830px){
+    .card-custom{
+        max-width: 90%;
+    }
 
-   .delete-card{
-    color: #fafbfd;
-    font-size: 20px;
-    background: #c41010;
-    border: none;
-    border-radius: 5px;
-    padding: 6px 12px;
-   }
-
-   .show-card{
-    color: #fafbfd;
-    font-size: 20px;
-    background: #52B6DB;
-    border: none;
-    border-radius: 5px;
-    padding: 6px 10px;
-   }
-
-   .buttons-cards{
-    display: flex;
-    align-items: center;
-    justify-content: left;
-   }
-   .buttons-cards button{
-    margin-inline: 5px;
-   }
-
-   @media (max-width: 826px){
-    .card{
-        max-width: 100%;
+    .leyenda-progress{
+        flex-direction: column;
     }
    }
 
    @media (max-width: 590px){
+    .principal{
+        margin: 0;
+    }
     .progress-sections{
         width: 85%;
         margin: 20px auto 5px auto;
@@ -723,7 +898,7 @@ body{
 
 
    /*----- PROGRESO -----*/
-   .progress {
+   /* .progress {
     width: 100px;
     height: 100px !important;
     float: left; 
@@ -821,4 +996,4 @@ body{
       -webkit-transform: rotate(144deg);
       transform: rotate(144deg);
     }
-  }
+  } */

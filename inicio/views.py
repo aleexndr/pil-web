@@ -286,8 +286,12 @@ def cambio_contraseña(request):
 
 
 def subir_archivo_sharepoint(request):
+    current_url = request.get_full_path()    
         
     if request.method == 'POST':
+        
+        next_url = request.POST.get('next_url','/')
+        
         try:
             uploaded_file = request.FILES['archivo']
             file_name = uploaded_file.name
@@ -308,21 +312,24 @@ def subir_archivo_sharepoint(request):
             
                 success_message = "Su archivo se subio correctamente."
                 messages.success(request, success_message)
-            
-                return redirect('inicio')
+                print(next_url)
+                return redirect(next_url)
             
             except Exception as e:
                 error_message = "El archivo seleccionado ya se ha subido."
                 messages.error(request, error_message)
-                return redirect('inicio')
+                print(next_url)
+                return redirect(next_url)
                 
         except MultiValueDictKeyError:
             info_message = "Por favor, seleccione un archivo antes de intentar subirlo."
             messages.info(request, info_message)
-            return redirect('inicio')
+            print(next_url)
+            return redirect(next_url)
         
     else:
-        return redirect('inicio')
+        print(next_url)
+        return redirect(next_url)
     
     
 def solicitudes(request):

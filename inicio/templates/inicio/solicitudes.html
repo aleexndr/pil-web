@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Solicitudes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/fffb8e8912.js" crossorigin="anonymous"></script>
@@ -12,18 +12,20 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="../../static/css/index.css">
 </head>
+
 {% extends 'index.html' %}
+
 <body>
     {% block content %}
     <div class="contenedor">
         <h2 class="titulo">Solicitudes futuras</h2>
 
-        <div class="opciones">
+        <!-- <div class="opciones">
             <p>Proximas(0)</p>
             <p>Anteriores</p>
         </div>
 
-        <hr>
+        <hr> -->
 
         <div class="info">
             <div class="available">
@@ -50,75 +52,174 @@
             
             <button class="button-create" id="modalBtn">CREAR SOLICITUD</button>
         </div>
-        
-        <div class="card">
-            <div class="card-body principal">
-                <div class="sticker">¡GOZADO!</div>
-                <div class="info-card">
-                    <span class="title-type">SOLICITUD DE REGULARIZACION DE FALTAS</span>
-                    <div class="fechas-targetas">
-                        <span>Inicio: 2023/12/25</span>
-                        <span>Fin: 2024/01/30</span>
-                        <span>Días: 36</span>
-                    </div>
+        <div class="leyenda-progress">
+            <div class="emitido">
+                <span>Emitido</span>
+                <div class="emitido-color"></div>
+            </div>
+            <div class="validado">
+                <span>Validado</span>
+                <div class="validado-color"></div>
+            </div>
+            <div class="aprobado">
+                <span>Aprobado</span>
+                <div class="aprobado-color"></div>
+            </div>
+            <div class="boleta-emitida">
+                <span>Boleta Emitida</span>
+                <div class="boleta-emitida-color"></div>
+            </div>
+            <div class="boleta-firmada">
+                <span>Boleta Firmada</span>
+                <div class="boleta-firmada-color"></div>
+            </div>
+        </div>
 
-                    <div class="buttons-cards">
-                        <button class="edit-card"><i class="fa-solid fa-pen-to-square" title="Editar"></i></button>
-                        <button class="delete-card"><i class="fa-solid fa-trash-can" title="Eliminar"></i></button>
-                        <button class="show-card"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <div class="filtro-solicitudes">
+            <p id="link-vacaciones" class="solicitud-link active-solicitud">Vacaciones</p>
+            <p id="link-descansos" class="solicitud-link">Descansos</p>
+            <p id="link-licencias" class="solicitud-link">Licencias</p>
+        </div>
+
+        <div class="solicitudes-contenedor"> 
+            
+            <!-- SOLICITUDES-VACACIONES -->           
+            <div id="solicitudes-vacaciones" class="">
+                <div class="card-custom float">
+                    <div class="progress-bar-solicitudes"></div>
+                    <div class="principal">
+                        <!-- <div class="sticker">¡GOZADO!</div> -->
+                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="info-card">
+                            <span class="title-type">SOLICITUD DE VACACIONES REGULARES</span>
+                            <div class="fechas-targetas">
+                                <span>Inicio: 2023/12/25</span>
+                                <span>Fin: 2024/01/30</span>
+                                <span>Días: 36</span>
+                            </div>
+                        </div>
+    
+                        <div class="progress-sections">
+                            <button class="issued">Editar</button>
+                        </div>
                     </div>
                 </div>
+                <div class="card-custom float">
+                    <div class="progress-bar-solicitudes"></div>
+                    <div class="principal">
+                        <!-- <div class="sticker">¡GOZADO!</div> -->
+                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="info-card">
+                            <span class="title-type">SOLICITUD DE VACACIONES REGULARES</span>
+                            <div class="fechas-targetas">
+                                <span>Inicio: 2023/12/25</span>
+                                <span>Fin: 2024/01/30</span>
+                                <span>Días: 36</span>
+                            </div>
+                        </div>
+    
+                        <div class="progress-sections">
+                            <button class="issued">Editar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                <div class="progress-sections">
-                    <span class="issued">Emitido</span>
-                    <span class="validated">Validado</span>
-                    <span class="approved">Aprobado</span>
-                    <span class="ticket-issued">Boleta emitida</span>
-                    <span class="ticket-signed">Boleta firmada</span>
+            <!-- SOLICITUDES-DESCANSO -->
+            <div id="solicitudes-descanso" class="hidden">
+                <div class="card-custom float">
+                    <div class="progress-bar-solicitudes"></div>
+                    <div class="principal">
+                        <!-- <div class="sticker">¡GOZADO!</div> -->
+                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="info-card">
+                            <span class="title-type">SOLICITUD DE DESCANSO MEDICO</span>
+                            <div class="fechas-targetas">
+                                <span>Inicio: 2023/12/25</span>
+                                <span>Fin: 2024/01/30</span>
+                                <span>Días: 36</span>
+                            </div>
+                        </div>
+    
+                        <div class="progress-sections">
+                            <button class="issued">Editar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOLICITUDES-LICENCIAS -->
+            <div id="solicitudes-licencia" class="hidden">
+                <div class="card-custom float">
+                    <div class="progress-bar-solicitudes"></div>
+                    <div class="principal">
+                        <!-- <div class="sticker">¡GOZADO!</div> -->
+                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="info-card">
+                            <span class="title-type">SOLICITUD DE LICENCIA</span>
+                            <div class="fechas-targetas">
+                                <span>Inicio: 2023/12/25</span>
+                                <span>Fin: 2024/01/30</span>
+                                <span>Días: 36</span>
+                            </div>
+                        </div>
+    
+                        <div class="progress-sections">
+                            <button class="issued">Editar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-custom float">
+                    <div class="progress-bar-solicitudes"></div>
+                    <div class="principal">
+                        <!-- <div class="sticker">¡GOZADO!</div> -->
+                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="info-card">
+                            <span class="title-type">SOLICITUD DE LICENCIA</span>
+                            <div class="fechas-targetas">
+                                <span>Inicio: 2023/12/25</span>
+                                <span>Fin: 2024/01/30</span>
+                                <span>Días: 36</span>
+                            </div>
+                        </div>
+    
+                        <div class="progress-sections">
+                            <button class="issued">Editar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-custom float">
+                    <div class="progress-bar-solicitudes"></div>
+                    <div class="principal">
+                        <!-- <div class="sticker">¡GOZADO!</div> -->
+                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
+                        <div class="info-card">
+                            <span class="title-type">SOLICITUD DE LICENCIA</span>
+                            <div class="fechas-targetas">
+                                <span>Inicio: 2023/12/25</span>
+                                <span>Fin: 2024/01/30</span>
+                                <span>Días: 36</span>
+                            </div>
+                        </div>
+    
+                        <div class="progress-sections">
+                            <button class="issued">Editar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="card">
-            <div class="card-body principal">
-                <div class="sticker">¡GOZADO!</div>
-                <div class="info-card">
-                    <span class="title-type">SOLICITUD DE REGULARIZACION DE FALTAS</span>
-                    <div class="fechas-targetas">
-                        <span>Inicio: 2023/12/25</span>
-                        <span>Fin: 2024/01/30</span>
-                        <span>Días: 36</span>
-                    </div>
-                    <div class="buttons-cards">
-                        <button class="edit-card"><i class="fa-solid fa-pen-to-square"></i></button>
-                        <button class="delete-card"><i class="fa-solid fa-trash-can"></i></button>
-                        <button class="show-card"><i class="fa-solid fa-magnifying-glass"></i></button>
-                    </div>
-                </div>
-                <!-- <div class="progress blue">
-                    <span class="progress-left">
-                        <span class="progress-bar"></span>
-                    </span>
-                    <span class="progress-right">
-                        <span class="progress-bar"></span>
-                    </span>
-                    <div class="progress-value">90%</div>
-                </div> -->
-                <div class="progress-sections">
-                    <span class="issued">Emitido</span>
-                    <span class="validated">Validado</span>
-                    <span class="approved">Aprobado</span>
-                    <span class="ticket-issued">Boleta emitida</span>
-                    <span class="ticket-signed">Boleta firmada</span>
-                </div>
-            </div>
+
+        <div class="hidden">
+
         </div>
 
         <div id="myModal" class="hidden">
-            <div class="modal-content">
+            <div class="modal-content slide-top">
                 
                 <div class="select-content">
                     <div class="sub-title">
-                        <span class="close"><i class="fa-solid fa-xmark"></i></span>
+                        <span id="close" class="close"><i class="fa-solid fa-xmark"></i></span>
                         <h4 class="text-center">Crear una solicitud</h4>
                     </div>
                     
@@ -131,7 +232,7 @@
                             <option value="permiso">SOLICITUD DE PERMISO</option> -->
                             <option value="descanso">SOLICITUD DE DESCANSO MEDICO</option>
                             <option value="licencia">SOLICITUD DE LICENCIA</option>
-                            <option value="licencia">VENTA DE VACACIONES</option>
+                            <!-- <option value="licencia">VENTA DE VACACIONES</option> -->
                         </select>
                     </div>
                 </div>
@@ -168,10 +269,12 @@
                     </div>
                     
                     <div class="buttons-vacaciones">
-                        <button class="btn btn-danger">Cancelar</button>
+                        <button id="close2" class="btn btn-danger">Cancelar</button>
                         <button class="btn btn-primary">Crear</button>
                     </div>
                 </div>
+
+
 
                 <!-- DESCANSO -->
                 <div class="hidden descanso-option">
@@ -203,12 +306,14 @@
                             </select>
                         </div>
                         <div class="custom-file">
-                            <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data">
+                            <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data" class="form-license">
                                 {% csrf_token %}
-                                <label for="text-file">Elija un archivo</label>
-                                <label for="text-submit">Subir archivo</label>
-                                <input type="file" id="text-file">
-                                <input type="submit" id="text-submit">
+                                <h6 id="filename"></h6>
+                                <label for="archivo"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivo</label>
+                                <label for="text-submit">Subir</label>
+                                <input type="file" name="archivo" id="archivo">
+                                <input type="hidden" name="next_url" value="{{ request.get_full_path }}">
+                                <input type="submit" value="Subir archivo" id="text-submit">
                             </form>
                         </div>
                         <div class="authorizers-descanso input-group-sm">
@@ -221,10 +326,11 @@
                         </div>
                     </div>
                     <div class="buttons-descanso">
-                        <button class="btn btn-danger">Cancelar</button>
+                        <button id="close3" class="btn btn-danger">Cancelar</button>
                         <button type="submit" class="btn btn-primary">Crear</button>
                     </div>
                 </div>
+
 
 
                 <!-- LICENCIA -->
@@ -274,14 +380,20 @@
 
                         <div class="request-details-license input-group-sm form-floating">
                             <span>Descripción de la Solicitud:</span>
-                            <textarea contenteditable="true" class="form-control"></textarea>
+                            <textarea class="form-control"></textarea>
                         </div>
 
-                        <!-- <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <input type="file" name="archivo" id="archivo" class="subir-archivo">
-                            <input type="submit" value="Subir archivo" class="subir-archivo-success">
-                        </form> -->
+                        <div class="custom-file">
+                            <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data" class="form-license">
+                                {% csrf_token %}
+                                <h6 id="filename"></h6>
+                                <label for="archivo"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivo</label>
+                                <label for="text-submit">Subir</label>
+                                <input type="file" name="archivo" id="archivo">
+                                <input type="hidden" name="next_url" value="{{ request.get_full_path }}">
+                                <input type="submit" value="Subir archivo" id="text-submit">
+                            </form>
+                        </div>
 
                         <div class="authorizers-license input-group-sm">
                             <span>Responsable(s) de autorizacion:</span>
@@ -294,7 +406,7 @@
                     </div>                   
                     
                     <div class="buttons-license">
-                        <button class="btn btn-danger">Cancelar</button>
+                        <button id="close4" class="btn btn-danger">Cancelar</button>
                         <button class="btn btn-primary">Crear</button>
                     </div>
                 </div>

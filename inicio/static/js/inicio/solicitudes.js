@@ -48,7 +48,10 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener('DOMContentLoaded', function() {
     var modal = document.getElementById('myModal');
     var modalBtn = document.querySelector('.button-create');
-    var closeBtn = document.querySelector('.close');
+    var closeBtn = document.getElementById("close");
+    var closeBtn2 = document.getElementById("close2");
+    var closeBtn3 = document.getElementById("close3");
+    var closeBtn4 = document.getElementById("close4");
     var vacacionesOption = document.querySelector(".vacaciones-option");
     var licenciaOption = document.querySelector(".licencia-option");
     var descansoOption = document.querySelector(".descanso-option");
@@ -66,6 +69,36 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     closeBtn.addEventListener('click', function() {
+        modal.classList.remove('modal');
+        modal.classList.add('hidden');
+        vacacionesOption.classList.add("hidden");
+        faltasOption.classList.add("hidden");
+        licenciaOption.classList.add("hidden");
+        descansoOption.classList.add("hidden");
+        selectElement.selectedIndex = "";
+    });
+
+    closeBtn2.addEventListener('click', function() {
+        modal.classList.remove('modal');
+        modal.classList.add('hidden');
+        vacacionesOption.classList.add("hidden");
+        faltasOption.classList.add("hidden");
+        licenciaOption.classList.add("hidden");
+        descansoOption.classList.add("hidden");
+        selectElement.selectedIndex = "";
+    });
+
+    closeBtn3.addEventListener('click', function() {
+        modal.classList.remove('modal');
+        modal.classList.add('hidden');
+        vacacionesOption.classList.add("hidden");
+        faltasOption.classList.add("hidden");
+        licenciaOption.classList.add("hidden");
+        descansoOption.classList.add("hidden");
+        selectElement.selectedIndex = "";
+    });
+
+    closeBtn4.addEventListener('click', function() {
         modal.classList.remove('modal');
         modal.classList.add('hidden');
         vacacionesOption.classList.add("hidden");
@@ -144,12 +177,10 @@ document.addEventListener('DOMContentLoaded', function() {
     tipoLicenciaSelect.addEventListener('change', function() {
         var selectedOption = tipoLicenciaSelect.value;
 
-        // Oculta todas las opciones por defecto
         Array.from(detalleLicenciaSelect.options).forEach(function(option) {
             option.classList.add('hidden');
         });
 
-        // Muestra las opciones según la selección del primer select
         if (selectedOption === 'con') {
             document.getElementById('maternidad').classList.remove('hidden');
             document.getElementById('paternidad').classList.remove('hidden');
@@ -167,3 +198,56 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+let archivo = document.getElementById('archivo')
+archivo.addEventListener('change',() => {
+    document.getElementById('filename').innerText =
+        archivo.files[0].name;
+})
+
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    var vacacionesLink = document.getElementById('link-vacaciones');
+    var vacacionesSolicitudes = document.getElementById('solicitudes-vacaciones');
+    var descansoLink = document.getElementById('link-descansos');
+    var descansoSolicitudes = document.getElementById('solicitudes-descanso');
+    var licenciaLink = document.getElementById('link-licencias');
+    var licenciaSolicitudes = document.getElementById('solicitudes-licencia');
+
+    vacacionesLink.addEventListener('click', function() {
+
+        vacacionesLink.classList.add('active-solicitud')
+        descansoLink.classList.remove('active-solicitud')
+        licenciaLink.classList.remove('active-solicitud')
+
+        vacacionesSolicitudes.classList.remove('hidden');
+        descansoSolicitudes.classList.add('hidden');
+        licenciaSolicitudes.classList.add('hidden');
+
+    });
+
+    descansoLink.addEventListener('click', function() {
+
+        descansoLink.classList.add('active-solicitud')
+        vacacionesLink.classList.remove('active-solicitud')
+        licenciaLink.classList.remove('active-solicitud')
+
+        descansoSolicitudes.classList.remove('hidden');
+        vacacionesSolicitudes.classList.add('hidden');
+        licenciaSolicitudes.classList.add('hidden');
+
+    });
+
+    licenciaLink.addEventListener('click', function() {
+
+        licenciaLink.classList.add('active-solicitud')
+        vacacionesLink.classList.remove('active-solicitud')
+        descansoLink.classList.remove('active-solicitud')
+
+        licenciaSolicitudes.classList.remove('hidden');
+        vacacionesSolicitudes.classList.add('hidden');
+        descansoSolicitudes.classList.add('hidden');
+
+    });
+
+});
