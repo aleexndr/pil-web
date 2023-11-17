@@ -8,6 +8,7 @@ from django.db import ProgrammingError
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.utils.datastructures import MultiValueDictKeyError
+from django.core.files.uploadedfile import UploadedFile
 from office365.sharepoint.client_context import ClientContext
 from dotenv import load_dotenv
 from email.message import EmailMessage
@@ -286,16 +287,13 @@ def cambio_contraseña(request):
 
 
 def subir_archivo_sharepoint(request):
-    current_url = request.get_full_path()    
-        
+    current_url = request.get_full_path()
+
     if request.method == 'POST':
-        
-        next_url = request.POST.get('next_url','/')
-        
+        next_url = request.POST.get('next_url', '/')
+
         try:
-            uploaded_file = request.FILES['archivo']
-            file_name = uploaded_file.name
-            file_content = uploaded_file.read()
+            uploaded_files = request.FILES.getlist('archivo')
 
             sharepoint_url = os.getenv('SHAREPOINT_URL')
             username = os.getenv('SHAREPOINT_USERNAME')
@@ -304,29 +302,33 @@ def subir_archivo_sharepoint(request):
 
             ctx = ClientContext(sharepoint_url).with_user_credentials(username, password)
 
-            try:
-                target_folder = ctx.web.get_folder_by_server_relative_url(sharepoint_folder)
-                target_file = target_folder.files.add(file_name, file_content)
-                ctx.load(target_file)
-                ctx.execute_query()
-            
-                success_message = "Su archivo se subio correctamente."
-                messages.success(request, success_message)
-                print(next_url)
-                return redirect(next_url)
-            
-            except Exception as e:
-                error_message = "El archivo seleccionado ya se ha subido."
-                messages.error(request, error_message)
-                print(next_url)
-                return redirect(next_url)
-                
+            for uploaded_file in uploaded_files:
+                if isinstance(uploaded_file, UploadedFile):
+                    file_name = uploaded_file.name
+                    file_content = uploaded_file.read()
+
+                    try:
+                        target_folder = ctx.web.get_folder_by_server_relative_url(sharepoint_folder)
+                        target_file = target_folder.files.add(file_name, file_content)
+                        ctx.load(target_file)
+                        ctx.execute_query()
+
+                        success_message = f"El archivo '{file_name}' se subió correctamente."
+                        messages.success(request, success_message)
+
+                    except Exception as e:
+                        error_message = f"Error al subir el archivo '{file_name}': {str(e)}"
+                        messages.error(request, error_message)
+
+            print(next_url)
+            return redirect(next_url)
+
         except MultiValueDictKeyError:
-            info_message = "Por favor, seleccione un archivo antes de intentar subirlo."
+            info_message = "Por favor, seleccione al menos un archivo antes de intentar subirlo."
             messages.info(request, info_message)
             print(next_url)
             return redirect(next_url)
-        
+
     else:
         print(next_url)
         return redirect(next_url)

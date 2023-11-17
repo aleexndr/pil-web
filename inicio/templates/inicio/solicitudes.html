@@ -20,13 +20,6 @@
     <div class="contenedor">
         <h2 class="titulo">Solicitudes futuras</h2>
 
-        <!-- <div class="opciones">
-            <p>Proximas(0)</p>
-            <p>Anteriores</p>
-        </div>
-
-        <hr> -->
-
         <div class="info">
             <div class="available">
                 <button href="" class="button">
@@ -88,7 +81,6 @@
                 <div class="card-custom float">
                     <div class="progress-bar-solicitudes"></div>
                     <div class="principal">
-                        <!-- <div class="sticker">¡GOZADO!</div> -->
                         <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
                         <div class="info-card">
                             <span class="title-type">SOLICITUD DE VACACIONES REGULARES</span>
@@ -107,7 +99,6 @@
                 <div class="card-custom float">
                     <div class="progress-bar-solicitudes"></div>
                     <div class="principal">
-                        <!-- <div class="sticker">¡GOZADO!</div> -->
                         <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
                         <div class="info-card">
                             <span class="title-type">SOLICITUD DE VACACIONES REGULARES</span>
@@ -130,7 +121,6 @@
                 <div class="card-custom float">
                     <div class="progress-bar-solicitudes"></div>
                     <div class="principal">
-                        <!-- <div class="sticker">¡GOZADO!</div> -->
                         <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
                         <div class="info-card">
                             <span class="title-type">SOLICITUD DE DESCANSO MEDICO</span>
@@ -153,7 +143,6 @@
                 <div class="card-custom float">
                     <div class="progress-bar-solicitudes"></div>
                     <div class="principal">
-                        <!-- <div class="sticker">¡GOZADO!</div> -->
                         <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
                         <div class="info-card">
                             <span class="title-type">SOLICITUD DE LICENCIA</span>
@@ -172,7 +161,6 @@
                 <div class="card-custom float">
                     <div class="progress-bar-solicitudes"></div>
                     <div class="principal">
-                        <!-- <div class="sticker">¡GOZADO!</div> -->
                         <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
                         <div class="info-card">
                             <span class="title-type">SOLICITUD DE LICENCIA</span>
@@ -191,7 +179,6 @@
                 <div class="card-custom float">
                     <div class="progress-bar-solicitudes"></div>
                     <div class="principal">
-                        <!-- <div class="sticker">¡GOZADO!</div> -->
                         <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
                         <div class="info-card">
                             <span class="title-type">SOLICITUD DE LICENCIA</span>
@@ -226,7 +213,7 @@
                     <div class="choose">
                         <span>Tipo de solicitud</span>
                         <select name="" id="miSelect" class="form-select">
-                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="" disabled selected class="hidden">Selecciona una opción</option>
                             <option value="vacaciones">SOLICITUD DE VACACIONES REGULARES</option>
                             <!-- <option value="faltas">SOLICITUD DE REGULARIZACIÓN DE FALTAS</option>
                             <option value="permiso">SOLICITUD DE PERMISO</option> -->
@@ -238,41 +225,42 @@
                 </div>
 
                 <!-- VACACIONES -->
-                <div class="hidden vacaciones-option">
-                    <div class="notification">
-                        <span>Vacaciones: 27 dias disponibles</span>
-                    </div>
-    
+                <form id="vacaciones-form" action="
+                " method="POST" class="hidden vacaciones-option">
+                    {% csrf_token %}
                     <div class="period">
+                        <div class="notification">
+                            <span>Vacaciones: 27 dias disponibles</span>
+                        </div>
                         <div class="periods">
                             <div class="period-start input-group-sm">
                                 <span>Inicio Periodo:</span>
-                                <input id="date1" type="text" class="form-control"> 
+                                <input id="date1" type="date" class="form-control"> 
                             </div>
                             <div class="period-end input-group-sm">
                                 <span>Fin Periodo:</span>
-                                <input id="date2" type="text" class="form-control"> 
+                                <input id="date2" type="date" class="form-control"> 
                             </div> 
                             <div class="total-days input-group-sm">
                                 <span>Dias:</span>
-                                <input type="text" class="form-control" disabled>
+                                <input id="days" type="text" class="form-control" disabled>
                             </div>               
                         </div>
                         <div class="authorizers-vacaciones input-group-sm">
                             <span>Responsable(s) de autorizacion:</span>
-                            <input type="text" class="form-control" disabled>
+                            <input id="auth-vacaciones" type="text" class="form-control" disabled>
                         </div>
                         <div class="signature-vacaciones form-switch">
-                            <input type="checkbox" class="form-check-input">
+                            <input id="check-vacaciones" type="checkbox" class="form-check-input">
                             <span>Autorización de Firma Digital</span>
                         </div>
                     </div>
                     
                     <div class="buttons-vacaciones">
                         <button id="close2" class="btn btn-danger">Cancelar</button>
-                        <button class="btn btn-primary">Crear</button>
+                        <button class="btn btn-primary" onclick="return validarFormularioVacaciones()">Crear</button>
                     </div>
-                </div>
+                </form>
 
 
 
@@ -282,15 +270,15 @@
                         <div class="periods">
                             <div class="period-start input-group-sm">
                                 <span>Inicio Periodo:</span>
-                                <input type="text" id="date7" class="form-control" required>
+                                <input type="text" id="date3" class="form-control" required>
                             </div>
                             <div class="period-end input-group-sm">
                                 <span>Fin Periodo:</span>
-                                <input type="text" id="date8" class="form-control">    
+                                <input type="text" id="date4" class="form-control">    
                             </div> 
                             <div class="total-days input-group-sm">
                                 <span>Dias:</span>
-                                <input type="text" class="form-control" disabled>
+                                <input id="days2" type="text" class="form-control" disabled>
                             </div>           
                         </div>
 
@@ -298,24 +286,29 @@
                             <span>Causas de las faltas:</span>
 
                             <select class="form-select form-select-sm">
-                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="" disabled selected class="hidden">Selecciona una opción</option>
                                 <option>ENFERMEDAD</option>
                                 <option>ACCIDENTE</option>
                                 <option>OTROS</option>
                                 <option>COVID-19</option>
                             </select>
                         </div>
+
                         <div class="custom-file">
-                            <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data" class="form-license">
+                            <form id="uploadform" enctype="multipart/form-data" class="form-license">
                                 {% csrf_token %}
-                                <h6 id="filename"></h6>
-                                <label for="archivo"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivo</label>
+                                <div class="files-content">
+                                    <label for="archivo"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivos</label>
+                                    <div id="filename" class="files-names"></div>
+                                </div>
+                                
                                 <label for="text-submit">Subir</label>
-                                <input type="file" name="archivo" id="archivo">
+                                <input type="file" name="archivo" id="archivo" onchange="handleFileSelect()" accept=".docx, .doc, .docm, .dot, .dotx, .dotm, .docm, application/msword,image/*, .pdf, .xls, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam" multiple>
                                 <input type="hidden" name="next_url" value="{{ request.get_full_path }}">
-                                <input type="submit" value="Subir archivo" id="text-submit">
+                                <input type="button" value="Subir archivo" id="text-submit" onclick="enviarFormulario()">
                             </form>
                         </div>
+
                         <div class="authorizers-descanso input-group-sm">
                             <span>Responsable(s) de autorizacion:</span>
                             <input type="text" class="form-control" disabled>
@@ -339,15 +332,15 @@
                         <div class="periods">
                             <div class="period-start input-group-sm">
                                 <span>Inicio Periodo:</span>
-                                <input id="date3" type="text" class="form-control"> 
+                                <input id="date5" type="text" class="form-control"> 
                             </div>
                             <div class="period-end input-group-sm">
                                 <span>Fin Periodo:</span>
-                                <input id="date4" type="text" class="form-control">
+                                <input id="date6" type="text" class="form-control">
                             </div> 
                             <div class="total-days input-group-sm">
                                 <span>Dias:</span>
-                                <input type="text" class="form-control" disabled>
+                                <input id="days3" type="text" class="form-control" disabled>
                             </div>               
                         </div>
 
@@ -355,7 +348,7 @@
                             <span>Tipo de Licencia</span>
 
                             <select name="" id="typelicense" class="form-select form-select-sm">
-                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="" disabled selected class="hidden">Selecciona una opción</option>
                                 <option value="con" >LICENCIA CON GOCE DE HABER</option>
                                 <option value="sin">LICENCIA SIN GOCE DE HABER</option>
                             </select>
@@ -365,7 +358,7 @@
                             <span>Detalle de Licencia</span>
 
                             <select name="" id="licensedetail" class="form-select form-select-sm">
-                                <option value="" disabled selected>Selecciona una opción</option>
+                                <option value="" disabled selected class="hidden">Selecciona una opción</option>
                                 <option class="hidden" id="maternidad">LICENCIA POR MATERNIDAD</option>
                                 <option class="hidden" id="paternidad">LICENCIA POR PATERNIDAD</option>
                                 <option class="hidden" id="familiar">FALLECIMIENTO DE FAMILIAR</option>
@@ -386,12 +379,12 @@
                         <div class="custom-file">
                             <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data" class="form-license">
                                 {% csrf_token %}
-                                <h6 id="filename"></h6>
-                                <label for="archivo"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivo</label>
-                                <label for="text-submit">Subir</label>
-                                <input type="file" name="archivo" id="archivo">
-                                <input type="hidden" name="next_url" value="{{ request.get_full_path }}">
-                                <input type="submit" value="Subir archivo" id="text-submit">
+                                <h6 id="filename2"></h6>
+                                <label for="archivo2"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivo</label>
+                                <label for="text-submit2">Subir</label>
+                                <input type="file" name="archivo2" id="archivo2">
+                                <input type="hidden" name="next_url2" value="{{ request.get_full_path }}">
+                                <input type="submit" value="Subir archivo" id="text-submit2">
                             </form>
                         </div>
 
@@ -481,6 +474,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const subirArchivoUrl = "{% url 'subir_archivo_sharepoint' %}";
+    </script>
     <script src="../../static/js/inicio/solicitudes.js"></script>
     {% endblock %}
     
