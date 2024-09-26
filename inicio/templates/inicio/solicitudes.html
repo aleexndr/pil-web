@@ -20,6 +20,7 @@
     <div class="contenedor">
         <h2 class="titulo">Solicitudes futuras</h2>
 
+        <!-- MARK:BLQ.CALENDARIO -->
         <div class="info">
             <div class="available">
                 <button href="" class="button">
@@ -45,7 +46,7 @@
             
             <button class="button-create" id="modalBtn">CREAR SOLICITUD</button>
         </div>
-        <div class="leyenda-progress">
+        <!-- <div class="leyenda-progress">
             <div class="emitido">
                 <span>Emitido</span>
                 <div class="emitido-color"></div>
@@ -66,147 +67,519 @@
                 <span>Boleta Firmada</span>
                 <div class="boleta-firmada-color"></div>
             </div>
-        </div>
+        </div> -->
+
+        <!-- MARK:F.E.VACACIONES -->
+        {% if tipoformato == 1 %}
+            <div id="myModaledt" class="hidden">
+                <div class="modal-content slide-top">
+                    <div>
+                        <span id="closeedt" class="closeedit"><i class="fa-solid fa-xmark"></i></span>
+                        <h4 class="text-center">Editar solicitud</h4>
+                    </div>
+                    <form id="vacaciones-formedt" action="{% url 'vacaciones_solicitud_editar' %}" method="POST" class=" vacaciones-option">
+                        {% csrf_token %}
+                        <div class="period-vacaciones">
+                            <div class="period">
+                                <div class="notification">
+                                    <span>Vacaciones: 27 dias disponibles</span>
+                                </div>
+                                <div class="periods">
+                                    <div class="period-start input-group-sm">
+                                        <span>Inicio Periodo</span>
+                                        <input id="date1edt" name="fecinicvacedt" type="text" class="form-control flatpickr" value="{{ fecinicedit }}"> 
+                                    </div>
+                                    <div class="period-end input-group-sm">
+                                        <span>Fin Periodo</span>
+                                        <input id="date2edt" name="fecfinvacedt" type="text" class="form-control flatpickr" value="{{ fecfinedit }}"> 
+                                    </div> 
+                                    <div class="total-days input-group-sm">
+                                        <span>Dias</span>
+                                        <input id="daysedt" name="diasvacedt" type="text" class="form-control daysvac" readonly>
+                                    </div>               
+                                </div>
+                                <div class="authorizers-vacaciones input-group-sm">
+                                    <span>Responsable(s) de autorizacion:</span>
+                                    <input list="solic-autho-vac" id="auth-vacacionesedt" name="aprobadorvacedt" type="text" class="form-control authvac" autocomplete="off" value="{{ nomaprobedt }}">
+                                    <datalist id="solic-autho-vac">
+                                        {% for nombre_trabajador in nombres_trabajadores %}
+                                            <option value="{{ nombre_trabajador }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+
+                                {% if intermediario == 0 %}
+                                    <div class="solicitante-vacaciones input-group-sm">
+                                        <span>Solicitante(s):</span>
+                                        <input class="form-control solicvac" id="solic-vacedt" name="solicitantevacedt" value="{{ nomsolicedt }}" readonly>
+                                    </div>
+                                {% else %}
+                                    <div class="solicitante-vacaciones input-group-sm">
+                                        <span>Solicitante(s):</span>
+                                        <input list="solic-vacaciones" id="solic-vacedt" class="form-control solicvac" name="solicitantevacedt" type="text" autocomplete="off" value="{{ nomsolicedt }}">
+                                        <datalist id="solic-vacaciones">
+                                            {% for nombre_trabajador in nombres_trabajadores %}
+                                                <option value="{{ nombre_trabajador }}"></option>
+                                            {% endfor %}
+                                        </datalist>
+                                    </div>
+                                {% endif %}
+
+                                <input type="hidden" name="tiposolicvacedt" value="1">
+                                <input type="hidden" name="idsolicvacedt" value="{{ id_solicitud }}">
+                            </div>
+                            <div class="buttons-vacaciones">
+                                <button id="close2edt" class="btn btn-danger">Cancelar</button>
+                                <button id="editBtnVacaciones" class="btn btn-primary">Editar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        <!-- MARK:F.E.DESCANSO -->
+        {% elif tipoformato == 2 %}
+
+            <div id="myModaledt" class="hidden">
+                <div class="modal-content slide-top">
+                    <div>
+                        <span id="closeedt" class="closeedit"><i class="fa-solid fa-xmark"></i></span>
+                        <h4 class="text-center">Editar solicitud</h4>
+                    </div>
+                    <form id="descanso-formedt" class="hidden descanso-option" action="{% url 'descanso_solicitud_editar' %}" enctype="multipart/form-data" method="POST">
+                        {% csrf_token %}
+                        <div class="period-descanso">
+                            <div class="period">
+                                <div class="periods">
+                                    <div class="period-start input-group-sm">
+                                        <span>Inicio Periodo:</span>
+                                        <input type="text" id="date3edt" name="fecinicdesedt" class="form-control flatpickr" value="{{ fecinicedit }}">
+                                    </div>
+                                    <div class="period-end input-group-sm">
+                                        <span>Fin Periodo:</span>
+                                        <input type="text" id="date4edt" name="fecfindesedt" class="form-control flatpickr" value="{{ fecfinedit }}">    
+                                    </div> 
+                                    <div class="total-days input-group-sm">
+                                        <span>Dias:</span>
+                                        <input id="days2edt" type="text" name="diasdesedt" class="form-control daysdes" readonly>
+                                    </div>           
+                                </div>
+        
+                                <div class="type-descanso">
+                                    <span>Causas de las faltas:</span>
+        
+                                    <select id="selectdes" class="form-select form-select-sm" name="causasdesedt">
+                                        <option value="{{ caudesedt }}" readonly selected class="hidden">{{ caudesedttex }}</option>
+                                        {% for causa_des in data_nom_causa %}
+                                            <option value="{{ causa_des.0 }}">{{ causa_des.1 }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+
+                                <div class="custom-file">
+                                    <form enctype="multipart/form-data" class="form-descanso">
+                                        {% csrf_token %}
+                                        <div class="files-content">
+                                            <label for="archivosdesedt"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivos</label>
+                                            <div id="filenamedesedt" class="files-names" data-archivos-existentes="{{ archivos_existentesdes }}"></div>
+                                        </div>
+                                        <input type="file" name="archivosdesedt" id="archivosdesedt" onchange="handleFileSelectdesedt()" accept=".docx, .doc, .docm, .dot, .dotx, .dotm, .docm, application/msword,image/*, .pdf, .xls, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam" multiple>
+                                        <input type="hidden" name="urlsArchivosEliminar" id="urlsArchivosEliminar" value="">
+                                    </form>
+                                </div>
+                                
+        
+                                <div class="authorizers-descanso input-group-sm">
+                                    <span>Responsable(s) de autorizacion:</span>
+                                    <input list="solic-autho-des" id="auth-descansoedt" name="aprobadordesedt" type="text" class="form-control authdes" autocomplete="off" value="{{ nomaprobedt }}">
+                                    <datalist id="solic-autho-des">
+                                        {% for nombre_trabajador in nombres_trabajadores %}
+                                            <option value="{{ nombre_trabajador }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+    
+                                {% if intermediario == 0 %}
+                                    <div class="solicitante-descanso input-group-sm">
+                                        <span>Solicitante(s):</span>
+                                        <input class="form-control solicdes" id="solic-desedt" name="solicitantedesedt" value="{{ nomsolicedt }}" readonly>
+                                    </div>
+                                {% else %}
+                                    <div class="solicitante-descanso input-group-sm">
+                                        <span>Solicitante(s):</span>
+                                        <input list="solic-descanso" id="solic-desedt" class="form-control solicdes" name="solicitantedesedt" type="text" autocomplete="off" value="{{ nomsolicedt }}">
+                                        <datalist id="solic-descanso">
+                                            {% for nombre_trabajador in nombres_trabajadores %}
+                                                <option value="{{ nombre_trabajador }}"></option>
+                                            {% endfor %}
+                                        </datalist>
+                                    </div>
+                                {% endif %}
+        
+                                <input type="hidden" name="tiposolicdesedt" value="2">
+                                <input type="hidden" name="idsolicdesedt" value="{{ id_solicitud }}">
+                            </div>
+    
+                            <div class="buttons-descanso">
+                                <button id="close3edt" class="btn btn-danger" type="button">Cancelar</button>
+                                <button id="editBtnDescanso" class="btn btn-primary" type="submit">Editar</button>
+                            </div>
+                        </div>                   
+                    </form>
+                </div>
+            </div>
+        
+        <!-- MARK:F.E.LICENCIA -->
+        {% elif tipoformato == 3 %}
+
+            <div id="myModaledt" class="hidden">
+                <div class="modal-content slide-top">
+                    <div>
+                        <span id="closeedt" class="closeedit"><i class="fa-solid fa-xmark"></i></span>
+                        <h4 class="text-center">Editar solicitud</h4>
+                    </div>
+                    <form id="licencia-formedt" class="hidden licencia-option" action="{% url 'licencia_solicitud_editar' %}" enctype="multipart/form-data" method="POST">
+                        {% csrf_token %}
+                        <div class="period-licencia">
+                            <div class="period">
+                                <div class="periods">
+                                    <div class="period-start input-group-sm">
+                                        <span>Inicio Periodo:</span>
+                                        <input id="date5edt" name="feciniclicedt" type="text" class="form-control flatpickr" value="{{ fecinicedit }}"> 
+                                    </div>
+                                    <div class="period-end input-group-sm">
+                                        <span>Fin Periodo:</span>
+                                        <input id="date6edt" name="fecfinlicedt" type="text" class="form-control flatpickr" value="{{ fecfinedit }}">
+                                    </div> 
+                                    <div class="total-days input-group-sm">
+                                        <span>Dias:</span>
+                                        <input id="days3edt" name="diaslicedt" type="text" class="form-control dayslic" readonly>
+                                    </div>               
+                                </div>
+        
+                                <div class="type-license">
+                                    <span>Tipo de Licencia</span>
+        
+                                    <select name="tiplicedt" id="typelicenseedt" class="form-select form-select-sm">
+                                        <option value="{{ catlicedt }}" readonly selected class="hidden">{{ catlicedttex }}</option>
+                                        <option value="1" >LICENCIA CON GOCE DE HABER</option>
+                                        <option value="2">LICENCIA SIN GOCE DE HABER</option>
+                                    </select>
+                                </div>
+        
+                                <div class="license-detail">
+                                    <span>Detalle de Licencia</span>
+        
+                                    <select name="detlicedt" id="licensedetailedt" class="form-select form-select-sm">
+                                        <option value="{{ detlicedt }}" readonly selected class="hidden">{{ detlicedttex }}</option>
+                                        <option value="1" class="hidden" id="maternidadedt">LICENCIA POR MATERNIDAD</option>
+                                        <option value="2" class="hidden" id="paternidadedt">LICENCIA POR PATERNIDAD</option>
+                                        <option value="3" class="hidden" id="familiaredt">FALLECIMIENTO DE FAMILIAR</option>
+                                        <option value="4" class="hidden" id="otros1edt">OTROS</option>
+                                        <option value="5" class="hidden" id="estudiosedt">ESTUDIOS</option>
+                                        <option value="6" class="hidden" id="tramitesedt">TRAMITES DIVERSOS</option>
+                                        <option value="7" class="hidden" id="personalesedt">MOTIVOS PERSONALES</option>
+                                        <option value="8" class="hidden" id="saludedt">PROBLEMAS DE SALUD</option>
+                                        <option value="9" class="hidden" id="otros2edt">OTROS</option>
+                                    </select>
+                                </div>
+        
+                                <div class="request-details-license input-group-sm form-floating">
+                                    <span>Descripción de la Solicitud:</span>
+                                    <textarea name="deslicedt" id="textarealicedt" class="form-control">{{ deslicedt }}</textarea>
+                                </div>
+        
+                                <div class="custom-file">
+                                    <form enctype="multipart/form-data" class="form-license">
+                                        {% csrf_token %}
+                                        <div class="files-content">
+                                            <label for="archivoslicedt"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivos</label>
+                                            <div id="filenamelicedt" class="files-names" data-archivos-existentes-lic="{{ archivos_existenteslic }}"></div>
+                                        </div>
+                                        <input type="file" name="archivoslicedt" id="archivoslicedt" onchange="handleFileSelectlicedt()" accept=".docx, .doc, .docm, .dot, .dotx, .dotm, .docm, application/msword,image/*, .pdf, .xls, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam" multiple>
+                                        <input type="hidden" name="urlsArchivosEliminarlic" id="urlsArchivosEliminarlic" value="">
+                                    </form>
+                                </div>                                
+        
+                                <div class="authorizers-license input-group-sm">
+                                    <span>Responsable(s) de autorizacion:</span>
+                                    <input list="solic-autho-lic" id="auth-licenseedt" name="aprobadorlicedt" type="text" class="form-control authlic" autocomplete="off" value="{{ nomaprobedt }}">
+                                    <datalist id="solic-autho-lic">
+                                        {% for nombre_trabajador in nombres_trabajadores %}
+                                            <option value="{{ nombre_trabajador }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+
+                                {% if intermediario == 0 %}
+                                    <div class="solicitante-licencia input-group-sm">
+                                        <span>Solicitante(s):</span>
+                                        <input class="form-control soliclic" id="solic-licedt" name="solicitantelicedt" value="{{ nomsolicedt }}" readonly>
+                                    </div>
+                                {% else %}
+                                    <div class="solicitante-licencia input-group-sm">
+                                        <span>Solicitante(s):</span>
+                                        <input list="solic-licencia" id="solic-licedt" class="form-control soliclic" name="solicitantelicedt" type="text" autocomplete="off" value="{{ nomsolicedt }}">
+                                        <datalist id="solic-licencia">
+                                            {% for nombre_trabajador in nombres_trabajadores %}
+                                                <option value="{{ nombre_trabajador }}"></option>
+                                            {% endfor %}
+                                        </datalist>
+                                    </div>
+                                {% endif %}
+        
+                                <input type="hidden" name="tiposoliclicedt" value="3">
+                                <input type="hidden" name="idsoliclicedt" value="{{ id_solicitud }}">
+                            </div>
+                            <div class="buttons-license">
+                                <button id="close4edt" class="btn btn-danger" type="button">Cancelar</button>
+                                <button id="editBtnLicencia" class="btn btn-primary" type="submit">Editar</button>
+                            </div>
+                        </div>                   
+                    </form>
+                </div>
+            </div>
+        
+        <!-- MARK:F.E.FALTAS -->
+        {% elif tipoformato == 4 %}
+
+            <div id="myModaledt" class="hidden">
+                <div class="modal-content slide-top">
+                    <div>
+                        <span id="closeedt" class="closeedit"><i class="fa-solid fa-xmark"></i></span>
+                        <h4 class="text-center">Editar solicitud</h4>
+                    </div>
+                    <form id="faltas-formedt" action="{% url 'falta_solicitud_editar' %}" method="POST" class="hidden faltas-option">
+                        {% csrf_token %}
+                        <div class="period-faltas">
+                            <div class="period">
+                                <div class="notification">
+                                    <span>Vacaciones: 27 dias disponibles</span>
+                                </div>
+                                <div class="periods">
+                                    <div class="period-start input-group-sm">
+                                        <span>Inicio Periodo:</span>
+                                        <input id="date7edt" name="fecinicfaledt" type="text" class="form-control flatpickr" value="{{ fecinicedit }}"> 
+                                    </div>
+                                    <div class="period-end input-group-sm">
+                                        <span>Fin Periodo:</span>
+                                        <input id="date8edt" name="fecfinfaledt" type="text" class="form-control flatpickr" value="{{ fecfinedit }}">
+                                    </div> 
+                                    <div class="total-days input-group-sm">
+                                        <span>Dias:</span>
+                                        <input id="days4edt" name="diasfaledt" type="text" class="form-control daysfal" readonly>
+                                    </div>
+                                    <div class="total-days input-group-sm">
+                                        <span>Horas:</span>
+                                        <input type="text" id="hoursfaledt" name="horasfaledt" class="form-control hoursfal" readonly>
+                                    </div>            
+                                </div>
+    
+                                <!-- <div class="type-faltas">
+                                    <span>Compensar Faltas por:</span>
+        
+                                    <select id="comfaledt" name="comfaledt" class="form-select form-select-sm">
+                                        <option value="" disabled selected class="hidden"></option>
+                                        <option value="1">CON VACACIONES</option>
+                                        <option value="2">CON SUELDO</option>
+                                    </select>
+                                </div> -->
+    
+                                <div class="faltas-detail">
+                                    <span>Causas de las faltas:</span>
+        
+                                    <select id="causafaledt" name="causafaledt" class="form-select form-select-sm">
+                                        <option value="{{ caufaledt }}" readonly selected class="hidden">{{ caufaledttex }}</option>
+                                        <option value="1">INASISTENCIA</option>
+                                        <option value="2">JORNADA LABORAL INCOMPLETA</option>
+                                        <option value="3">OTROS</option>
+                                    </select>
+                                </div>
+    
+                                <div class="request-details-faltas input-group-sm form-floating">
+                                    <span>Descripción de la Solicitud:</span>
+                                    <textarea id="textareafaledt" name="desfaledt" class="form-control">{{ descripedt }}</textarea>
+                                </div>
+    
+                                <div class="authorizers-faltas input-group-sm">
+                                    <span>Responsable(s) de autorizacion:</span>
+                                    <input list="solic-autho-fal" id="auth-faltasedt" name="aprobadorfaledt" type="text" class="form-control authfal" autocomplete="off" value="{{ nomaprobedt }}">
+                                    <datalist id="solic-autho-fal">
+                                        {% for nombre_trabajador in nombres_trabajadores %}
+                                            <option value="{{ nombre_trabajador }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+    
+                                {% if intermediario == 0 %}
+                                    <div class="solicitante-faltas input-group-sm">
+                                        <span>Solicitante(s):</span>
+                                        <input class="form-control solicfal" id="solic-faledt" name="solicitantefaledt" value="{{ nomsolicedt }}" readonly>
+                                    </div>
+                                {% else %}
+                                    <div class="solicitante-faltas input-group-sm">
+                                        <span>Solicitante(s):</span>
+                                        <input list="solic-faltas" id="solic-faledt" class="form-control solicfal" name="solicitantefaledt" type="text" autocomplete="off" value="{{ nomsolicedt }}">
+                                        <datalist id="solic-faltas">
+                                            {% for nombre_trabajador in nombres_trabajadores %}
+                                                <option value="{{ nombre_trabajador }}"></option>
+                                            {% endfor %}
+                                        </datalist>
+                                    </div>
+                                {% endif %}
+        
+                                <input type="hidden" name="tiposolicfaledt" value="4">
+                                <input type="hidden" name="idsolicfaledt" value="{{ id_solicitud }}">
+                            </div>
+    
+                            <div class="buttons-vacaciones">
+                                <button id="close5edt" class="btn btn-danger" type="button">Cancelar</button>
+                                <button id="editBtnFaltas" class="btn btn-primary" type="submit">Editar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        {% else %}
+
+        {% endif %}
+        
+
+
+
 
         <div class="filtro-solicitudes">
-            <p id="link-vacaciones" class="solicitud-link active-solicitud">Vacaciones</p>
+            <p id="link-vacaciones" class="solicitud-link">Vacaciones</p>
             <p id="link-descansos" class="solicitud-link">Descansos</p>
             <p id="link-licencias" class="solicitud-link">Licencias</p>
+            <p id="link-faltas" class="solicitud-link">Faltas</p>
         </div>
 
         <div class="solicitudes-contenedor"> 
             
-            <!-- SOLICITUDES-VACACIONES -->           
-            <div id="solicitudes-vacaciones" class="">
-                <div class="card-custom float">
-                    <div class="progress-bar-solicitudes"></div>
-                    <div class="principal">
-                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
-                        <div class="info-card">
-                            <span class="title-type">SOLICITUD DE VACACIONES REGULARES</span>
-                            <div class="fechas-targetas">
-                                <span>Inicio: 2023/12/25</span>
-                                <span>Fin: 2024/01/30</span>
-                                <span>Días: 36</span>
+            <!-- MARK:S.VACACIONES -->           
+            <div id="solicitudes-vacaciones" class="hidden">
+                {% for solicitud in solicitudes_usuario %}
+                    {% if solicitud.0 == 1 %}
+                        <div id="solicitud{{ solicitud.3 }}" class="card-custom float">
+                            <div class="progress-bar-solicitudes"></div>
+                            <div class="principal">
+                                <button id="btndelsolvac" class="close-card" data-solicitud-id="{{ solicitud.3 }}" aria-label="Eliminar"><i class="fa-solid fa-xmark"></i></button>
+                                <div class="info-card">
+                                    <span class="title-type">SOLICITUD DE VACACIONES REGULARES</span>
+                                    <div class="fechas-targetas">
+                                        <span class="code-solic">#00{{ solicitud.3 }}</span>
+                                        <span>Inicio: {{ solicitud.1 }}</span>
+                                        <span>Fin: {{ solicitud.2 }}</span>
+                                    </div>
+                                </div>
+                                <div class="progress-sections">
+                                    <button id="edtbtnsolvac" class="issued editar-btn editar-btn-solicitud" name="editar" data-solicitudedit-id="{{ solicitud.3 }}">Editar</button>
+                                </div>
                             </div>
                         </div>
-    
-                        <div class="progress-sections">
-                            <button class="issued">Editar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-custom float">
-                    <div class="progress-bar-solicitudes"></div>
-                    <div class="principal">
-                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
-                        <div class="info-card">
-                            <span class="title-type">SOLICITUD DE VACACIONES REGULARES</span>
-                            <div class="fechas-targetas">
-                                <span>Inicio: 2023/12/25</span>
-                                <span>Fin: 2024/01/30</span>
-                                <span>Días: 36</span>
-                            </div>
-                        </div>
-    
-                        <div class="progress-sections">
-                            <button class="issued">Editar</button>
-                        </div>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
 
-            <!-- SOLICITUDES-DESCANSO -->
+            
+
+
+            <!-- MARK:S.DESCANSO -->
             <div id="solicitudes-descanso" class="hidden">
-                <div class="card-custom float">
-                    <div class="progress-bar-solicitudes"></div>
-                    <div class="principal">
-                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
-                        <div class="info-card">
-                            <span class="title-type">SOLICITUD DE DESCANSO MEDICO</span>
-                            <div class="fechas-targetas">
-                                <span>Inicio: 2023/12/25</span>
-                                <span>Fin: 2024/01/30</span>
-                                <span>Días: 36</span>
+                {% for solicitud in solicitudes_usuario %}
+                    {% if solicitud.0 == 2 %}
+                        <div id="solicitud{{ solicitud.3 }}" class="card-custom float">
+                            <div class="progress-bar-solicitudes"></div>
+                            <div class="principal">
+                                <button id="btndelsoldes" class="close-card" data-solicitud-id="{{ solicitud.3 }}" aria-label="Eliminar"><i class="fa-solid fa-xmark"></i></button>
+                                <div class="info-card">
+                                    <span class="title-type">SOLICITUD DE DESCANSO MEDICO</span>
+                                    <div class="fechas-targetas">
+                                        <span class="code-solic">#00{{ solicitud.3 }}</span>
+                                        <span>Inicio: {{ solicitud.1 }}</span>
+                                        <span>Fin: {{ solicitud.2 }}</span>
+                                    </div>
+                                </div>
+                                <div class="progress-sections">
+                                    <button id="edtbtnsoldes" class="issued editar-btn editar-btn-solicitud" data-solicitudedit-id="{{ solicitud.3 }}">Editar</button>
+                                </div>
                             </div>
                         </div>
-    
-                        <div class="progress-sections">
-                            <button class="issued">Editar</button>
-                        </div>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
 
-            <!-- SOLICITUDES-LICENCIAS -->
+
+
+
+            <!-- MARK:S.LICENCIA -->
             <div id="solicitudes-licencia" class="hidden">
-                <div class="card-custom float">
-                    <div class="progress-bar-solicitudes"></div>
-                    <div class="principal">
-                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
-                        <div class="info-card">
-                            <span class="title-type">SOLICITUD DE LICENCIA</span>
-                            <div class="fechas-targetas">
-                                <span>Inicio: 2023/12/25</span>
-                                <span>Fin: 2024/01/30</span>
-                                <span>Días: 36</span>
+                {% for solicitud in solicitudes_usuario %}
+                    {% if solicitud.0 == 3 %}
+                        <div id="solicitud{{ solicitud.3 }}" class="card-custom float">
+                            <div class="progress-bar-solicitudes"></div>
+                            <div class="principal">
+                                <button id="btndelsoldes" class="close-card" data-solicitud-id="{{ solicitud.3 }}" aria-label="Eliminar"><i class="fa-solid fa-xmark"></i></button>
+                                <div class="info-card">
+                                    <span class="title-type">SOLICITUD DE LICENCIA</span>
+                                    <div class="fechas-targetas">
+                                        <span class="code-solic">#00{{ solicitud.3 }}</span>
+                                        <span>Inicio: {{ solicitud.1 }}</span>
+                                        <span>Fin: {{ solicitud.2 }}</span>
+                                    </div>
+                                </div>
+                                <div class="progress-sections">
+                                    <button id="edtbtnsollic" class="issued editar-btn editar-btn-solicitud" data-solicitudedit-id="{{ solicitud.3 }}">Editar</button>
+                                </div>
                             </div>
                         </div>
-    
-                        <div class="progress-sections">
-                            <button class="issued">Editar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-custom float">
-                    <div class="progress-bar-solicitudes"></div>
-                    <div class="principal">
-                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
-                        <div class="info-card">
-                            <span class="title-type">SOLICITUD DE LICENCIA</span>
-                            <div class="fechas-targetas">
-                                <span>Inicio: 2023/12/25</span>
-                                <span>Fin: 2024/01/30</span>
-                                <span>Días: 36</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+
+
+            <!-- MARK:S.FALTAS -->
+            <div id="solicitudes-faltas" class="hidden">
+                {% for solicitud in solicitudes_usuario %}
+                    {% if solicitud.0 == 4 %}
+                        <div id="solicitud{{ solicitud.3 }}" class="card-custom float">
+                            <div class="progress-bar-solicitudes"></div>
+                            <div class="principal">
+                                <button id="btndelsoldes" class="close-card" data-solicitud-id="{{ solicitud.3 }}" aria-label="Eliminar"><i class="fa-solid fa-xmark"></i></button>
+                                <div class="info-card">
+                                    <span class="title-type">SOLICITUD DE FALTAS</span>
+                                    <div class="fechas-targetas">
+                                        <span class="code-solic">#00{{ solicitud.3 }}</span>
+                                        <span>Inicio: {{ solicitud.1 }}</span>
+                                        <span>Fin: {{ solicitud.2 }}</span>
+                                    </div>
+                                </div>
+                                <div class="progress-sections">
+                                    <button id="edtbtnsolfal" class="issued editar-btn editar-btn-solicitud" data-solicitudedit-id="{{ solicitud.3 }}">Editar</button>
+                                </div>
                             </div>
                         </div>
-    
-                        <div class="progress-sections">
-                            <button class="issued">Editar</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-custom float">
-                    <div class="progress-bar-solicitudes"></div>
-                    <div class="principal">
-                        <button class="close-card"><i class="fa-solid fa-xmark"></i></button>
-                        <div class="info-card">
-                            <span class="title-type">SOLICITUD DE LICENCIA</span>
-                            <div class="fechas-targetas">
-                                <span>Inicio: 2023/12/25</span>
-                                <span>Fin: 2024/01/30</span>
-                                <span>Días: 36</span>
-                            </div>
-                        </div>
-    
-                        <div class="progress-sections">
-                            <button class="issued">Editar</button>
-                        </div>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
 
-        <div class="hidden">
 
-        </div>
 
+
+
+        
+        <!-- MARK:F.MODAL -->
         <div id="myModal" class="hidden">
             <div class="modal-content slide-top">
-                
+
                 <div class="select-content">
                     <div class="sub-title">
-                        <span id="close" class="close"><i class="fa-solid fa-xmark"></i></span>
+                        <span id="close1" class="close"><i class="fa-solid fa-xmark"></i></span>
                         <h4 class="text-center">Crear una solicitud</h4>
                     </div>
                     
@@ -215,271 +588,357 @@
                         <select name="" id="miSelect" class="form-select">
                             <option value="" disabled selected class="hidden">Selecciona una opción</option>
                             <option value="vacaciones">SOLICITUD DE VACACIONES REGULARES</option>
-                            <!-- <option value="faltas">SOLICITUD DE REGULARIZACIÓN DE FALTAS</option>
-                            <option value="permiso">SOLICITUD DE PERMISO</option> -->
+                            <!-- <option value="permiso">SOLICITUD DE PERMISOS</option> -->
                             <option value="descanso">SOLICITUD DE DESCANSO MEDICO</option>
                             <option value="licencia">SOLICITUD DE LICENCIA</option>
-                            <!-- <option value="licencia">VENTA DE VACACIONES</option> -->
+                            <option value="faltas">SOLICITUD DE REGULARIZACIÓN DE FALTAS</option>
+                            <!-- <option value="venta">VENTA DE VACACIONES</option> -->
                         </select>
                     </div>
                 </div>
 
-                <!-- VACACIONES -->
-                <form id="vacaciones-form" action="
-                " method="POST" class="hidden vacaciones-option">
+                <!-- MARK:F.VACACIONES -->
+                <form id="vacaciones-form" action="{% url 'vacaciones_solicitud' %}" method="POST" class="hidden vacaciones-option">
                     {% csrf_token %}
-                    <div class="period">
-                        <div class="notification">
-                            <span>Vacaciones: 27 dias disponibles</span>
-                        </div>
-                        <div class="periods">
-                            <div class="period-start input-group-sm">
-                                <span>Inicio Periodo:</span>
-                                <input id="date1" type="date" class="form-control"> 
+                    <div class="period-vacaciones">
+                        <div class="period">
+                            <div class="notification">
+                                <span>Vacaciones: 27 dias disponibles</span>
                             </div>
-                            <div class="period-end input-group-sm">
-                                <span>Fin Periodo:</span>
-                                <input id="date2" type="date" class="form-control"> 
-                            </div> 
-                            <div class="total-days input-group-sm">
-                                <span>Dias:</span>
-                                <input id="days" type="text" class="form-control" disabled>
-                            </div>               
+                            <div class="periods">
+                                <div class="period-start input-group-sm">
+                                    <span>Inicio Periodo</span>
+                                    <input id="date1" name="fecinicvac" type="text" class="form-control flatpickr"> 
+                                </div>
+                                <div class="period-end input-group-sm">
+                                    <span>Fin Periodo</span>
+                                    <input id="date2" name="fecfinvac" type="text" class="form-control flatpickr"> 
+                                </div> 
+                                <div class="total-days input-group-sm">
+                                    <span>Dias</span>
+                                    <input id="days" name="diasvac" type="text" class="form-control daysvac" readonly>
+                                </div>               
+                            </div>
+                            <div class="authorizers-vacaciones input-group-sm">
+                                <span>Responsable(s) de autorizacion:</span>
+                                <input list="solic-autho-vac" id="auth-vacaciones" name="aprobadorvac" type="text" class="form-control authvac" autocomplete="off">
+                                <datalist id="solic-autho-vac">
+                                    {% for nombre_trabajador in nombres_trabajadores %}
+                                        <option value="{{ nombre_trabajador }}"></option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+
+                            {% if intermediario == 0 %}
+                                <div class="solicitante-vacaciones input-group-sm">
+                                    <span>Solicitante(s):</span>
+                                    <input class="form-control solicvac" id="solic-vac" name="solicitantevac" value="{{ user_name }}" readonly>
+                                </div>
+                            {% else %}
+                                <div class="solicitante-vacaciones input-group-sm">
+                                    <span>Solicitante(s):</span>
+                                    <input list="solic-vacaciones" id="solic-vac" class="form-control solicvac" name="solicitantevac" type="text" autocomplete="off">
+                                    <datalist id="solic-vacaciones">
+                                        {% for nombre_trabajador in nombres_trabajadores %}
+                                            <option value="{{ nombre_trabajador }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            {% endif %}
+    
+                            <input type="hidden" name="tiposolicvac" value="1">
                         </div>
-                        <div class="authorizers-vacaciones input-group-sm">
-                            <span>Responsable(s) de autorizacion:</span>
-                            <input id="auth-vacaciones" type="text" class="form-control" disabled>
+                        <div class="buttons-vacaciones">
+                            <button id="close2" class="btn btn-danger" type="button">Cancelar</button>
+                            <button id="creacBtnVacaciones" class="btn btn-primary crear-btn-solicitud" type="submit">Crear</button>
                         </div>
-                        <div class="signature-vacaciones form-switch">
-                            <input id="check-vacaciones" type="checkbox" class="form-check-input">
-                            <span>Autorización de Firma Digital</span>
-                        </div>
-                    </div>
-                    
-                    <div class="buttons-vacaciones">
-                        <button id="close2" class="btn btn-danger">Cancelar</button>
-                        <button class="btn btn-primary" onclick="return validarFormularioVacaciones()">Crear</button>
                     </div>
                 </form>
 
 
 
-                <!-- DESCANSO -->
-                <div class="hidden descanso-option">
-                    <div class="period">
-                        <div class="periods">
-                            <div class="period-start input-group-sm">
-                                <span>Inicio Periodo:</span>
-                                <input type="text" id="date3" class="form-control" required>
-                            </div>
-                            <div class="period-end input-group-sm">
-                                <span>Fin Periodo:</span>
-                                <input type="text" id="date4" class="form-control">    
-                            </div> 
-                            <div class="total-days input-group-sm">
-                                <span>Dias:</span>
-                                <input id="days2" type="text" class="form-control" disabled>
-                            </div>           
-                        </div>
-
-                        <div class="type-descanso">
-                            <span>Causas de las faltas:</span>
-
-                            <select class="form-select form-select-sm">
-                                <option value="" disabled selected class="hidden">Selecciona una opción</option>
-                                <option>ENFERMEDAD</option>
-                                <option>ACCIDENTE</option>
-                                <option>OTROS</option>
-                                <option>COVID-19</option>
-                            </select>
-                        </div>
-
-                        <div class="custom-file">
-                            <form id="uploadform" enctype="multipart/form-data" class="form-license">
-                                {% csrf_token %}
-                                <div class="files-content">
-                                    <label for="archivo"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivos</label>
-                                    <div id="filename" class="files-names"></div>
+                <!-- MARK:F.DESCANSO -->
+                <form id="descanso-form" class="hidden descanso-option" action="{% url 'descanso_solicitud' %}" enctype="multipart/form-data" method="POST">
+                    {% csrf_token %}
+                    <div class="period-descanso">
+                        <div class="period">
+                            <div class="periods">
+                                <div class="period-start input-group-sm">
+                                    <span>Inicio Periodo:</span>
+                                    <input type="text" id="date3" name="fecinicdes" class="form-control flatpickr">
                                 </div>
-                                
-                                <label for="text-submit">Subir</label>
-                                <input type="file" name="archivo" id="archivo" onchange="handleFileSelect()" accept=".docx, .doc, .docm, .dot, .dotx, .dotm, .docm, application/msword,image/*, .pdf, .xls, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam" multiple>
-                                <input type="hidden" name="next_url" value="{{ request.get_full_path }}">
-                                <input type="button" value="Subir archivo" id="text-submit" onclick="enviarFormulario()">
-                            </form>
-                        </div>
-
-                        <div class="authorizers-descanso input-group-sm">
-                            <span>Responsable(s) de autorizacion:</span>
-                            <input type="text" class="form-control" disabled>
-                        </div>
-                        <div class="signature-descanso form-switch">
-                            <input type="checkbox" class="form-check-input">
-                            <span>Autorización de Firma Digital</span>
-                        </div>
-                    </div>
-                    <div class="buttons-descanso">
-                        <button id="close3" class="btn btn-danger">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Crear</button>
-                    </div>
-                </div>
-
-
-
-                <!-- LICENCIA -->
-                <div class="hidden licencia-option">
-                    <div class="period-licencia">
-                        <div class="periods">
-                            <div class="period-start input-group-sm">
-                                <span>Inicio Periodo:</span>
-                                <input id="date5" type="text" class="form-control"> 
+                                <div class="period-end input-group-sm">
+                                    <span>Fin Periodo:</span>
+                                    <input type="text" id="date4" name="fecfindes" class="form-control flatpickr">    
+                                </div> 
+                                <div class="total-days input-group-sm">
+                                    <span>Dias:</span>
+                                    <input id="days2" type="text" name="diasdes" class="form-control daysdes" readonly>
+                                </div>           
                             </div>
-                            <div class="period-end input-group-sm">
-                                <span>Fin Periodo:</span>
-                                <input id="date6" type="text" class="form-control">
-                            </div> 
-                            <div class="total-days input-group-sm">
-                                <span>Dias:</span>
-                                <input id="days3" type="text" class="form-control" disabled>
-                            </div>               
+    
+                            <div class="type-descanso">
+                                <span>Causas de las faltas:</span>
+    
+                                <select id="selectdes" class="form-select form-select-sm" name="causasdes">
+                                    <option value="" disabled selected class="hidden">Selecciona una opción</option>
+                                    {% for causa_des in data_nom_causa %}
+                                        <option value="{{ causa_des.0 }}">{{ causa_des.1 }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+    
+                            <div class="custom-file">
+                                <form enctype="multipart/form-data" class="form-descanso">
+                                    {% csrf_token %}
+                                    <div class="files-content">
+                                        <label for="archivosdes"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivos</label>
+                                        <div id="filenamedes" class="files-names"></div>
+                                    </div>
+                                    <input type="file" name="archivosdes" id="archivosdes" onchange="handleFileSelectdes()" accept=".docx, .doc, .docm, .dot, .dotx, .dotm, .docm, application/msword,image/*, .pdf, .xls, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam" multiple>
+                                </form>
+                            </div>
+    
+                            <div class="authorizers-descanso input-group-sm">
+                                <span>Responsable(s) de autorizacion:</span>
+                                <input list="solic-autho-des" id="auth-descanso" name="aprobadordes" type="text" class="form-control authdes" autocomplete="off">
+                                <datalist id="solic-autho-des">
+                                    {% for nombre_trabajador in nombres_trabajadores %}
+                                        <option value="{{ nombre_trabajador }}"></option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+
+                            {% if intermediario == 0 %}
+                                <div class="solicitante-descanso input-group-sm">
+                                    <span>Solicitante(s):</span>
+                                    <input class="form-control solicdes" id="solic-des" name="solicitantedes" value="{{ user_name }}" readonly>
+                                </div>
+                            {% else %}
+                                <div class="solicitante-descanso input-group-sm">
+                                    <span>Solicitante(s):</span>
+                                    <input list="solic-descanso" id="solic-des" class="form-control solicdes" name="solicitantedes" type="text" autocomplete="off">
+                                    <datalist id="solic-descanso">
+                                        {% for nombre_trabajador in nombres_trabajadores %}
+                                            <option value="{{ nombre_trabajador }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            {% endif %}
+    
+                            <input type="hidden" name="tiposolicdes" value="2">
                         </div>
 
-                        <div class="type-license">
-                            <span>Tipo de Licencia</span>
-
-                            <select name="" id="typelicense" class="form-select form-select-sm">
-                                <option value="" disabled selected class="hidden">Selecciona una opción</option>
-                                <option value="con" >LICENCIA CON GOCE DE HABER</option>
-                                <option value="sin">LICENCIA SIN GOCE DE HABER</option>
-                            </select>
-                        </div>
-
-                        <div class="license-detail">
-                            <span>Detalle de Licencia</span>
-
-                            <select name="" id="licensedetail" class="form-select form-select-sm">
-                                <option value="" disabled selected class="hidden">Selecciona una opción</option>
-                                <option class="hidden" id="maternidad">LICENCIA POR MATERNIDAD</option>
-                                <option class="hidden" id="paternidad">LICENCIA POR PATERNIDAD</option>
-                                <option class="hidden" id="familiar">FALLECIMIENTO DE FAMILIAR</option>
-                                <option class="hidden" id="otros1">OTROS</option>
-                                <option class="hidden" id="estudios">ESTUDIOS</option>
-                                <option class="hidden" id="tramites">TRAMITES DIVERSOS</option>
-                                <option class="hidden" id="personales">MOTIVOS PERSONALES</option>
-                                <option class="hidden" id="salud">PROBLEMAS DE SALUD</option>
-                                <option class="hidden" id="otros2">OTROS</option>
-                            </select>
-                        </div>
-
-                        <div class="request-details-license input-group-sm form-floating">
-                            <span>Descripción de la Solicitud:</span>
-                            <textarea class="form-control"></textarea>
-                        </div>
-
-                        <div class="custom-file">
-                            <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data" class="form-license">
-                                {% csrf_token %}
-                                <h6 id="filename2"></h6>
-                                <label for="archivo2"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivo</label>
-                                <label for="text-submit2">Subir</label>
-                                <input type="file" name="archivo2" id="archivo2">
-                                <input type="hidden" name="next_url2" value="{{ request.get_full_path }}">
-                                <input type="submit" value="Subir archivo" id="text-submit2">
-                            </form>
-                        </div>
-
-                        <div class="authorizers-license input-group-sm">
-                            <span>Responsable(s) de autorizacion:</span>
-                            <input type="text" class="form-control" disabled>
-                        </div>
-                        <div class="signature-license form-switch">
-                            <input type="checkbox" class="form-check-input">
-                            <span>Autorización de Firma Digital</span>
+                        <div class="buttons-descanso">
+                            <button id="close3" class="btn btn-danger" type="button">Cancelar</button>
+                            <button id="crearBtnDescanso" class="btn btn-primary crear-btn-solicitud" type="submit">Crear</button>
                         </div>
                     </div>                   
-                    
-                    <div class="buttons-license">
-                        <button id="close4" class="btn btn-danger">Cancelar</button>
-                        <button class="btn btn-primary">Crear</button>
-                    </div>
-                </div>
+                </form>
+
+
+
+                <!-- MARK:F.LICENCIA -->
+                <form id="licencia-form" class="hidden licencia-option" action="{% url 'licencia_solicitud' %}" enctype="multipart/form-data"6 method="POST">
+                    {% csrf_token %}
+                    <div class="period-licencia">
+                        <div class="period">
+                            <div class="periods">
+                                <div class="period-start input-group-sm">
+                                    <span>Inicio Periodo:</span>
+                                    <input id="date5" name="feciniclic" type="text" class="form-control flatpickr"> 
+                                </div>
+                                <div class="period-end input-group-sm">
+                                    <span>Fin Periodo:</span>
+                                    <input id="date6" name="fecfinlic" type="text" class="form-control flatpickr">
+                                </div> 
+                                <div class="total-days input-group-sm">
+                                    <span>Dias:</span>
+                                    <input id="days3" name="diaslic" type="text" class="form-control dayslic" readonly>
+                                </div>               
+                            </div>
+    
+                            <div class="type-license">
+                                <span>Tipo de Licencia</span>
+    
+                                <select name="tiplic" id="typelicense" class="form-select form-select-sm">
+                                    <option value="" disabled selected class="hidden">Selecciona una opción</option>
+                                    <option value="1" >LICENCIA CON GOCE DE HABER</option>
+                                    <option value="2">LICENCIA SIN GOCE DE HABER</option>
+                                </select>
+                            </div>
+    
+                            <div class="license-detail">
+                                <span>Detalle de Licencia</span>
+    
+                                <select name="detlic" id="licensedetail" class="form-select form-select-sm">
+                                    <option value="" disabled selected class="hidden">Selecciona una opción</option>
+                                    <option value="1" class="hidden" id="maternidad">LICENCIA POR MATERNIDAD</option>
+                                    <option value="2" class="hidden" id="paternidad">LICENCIA POR PATERNIDAD</option>
+                                    <option value="3" class="hidden" id="familiar">FALLECIMIENTO DE FAMILIAR</option>
+                                    <option value="4" class="hidden" id="otros1">OTROS</option>
+                                    <option value="5" class="hidden" id="estudios">ESTUDIOS</option>
+                                    <option value="6" class="hidden" id="tramites">TRAMITES DIVERSOS</option>
+                                    <option value="7" class="hidden" id="personales">MOTIVOS PERSONALES</option>
+                                    <option value="8" class="hidden" id="salud">PROBLEMAS DE SALUD</option>
+                                    <option value="9" class="hidden" id="otros2">OTROS</option>
+                                </select>
+                            </div>
+    
+                            <div class="request-details-license input-group-sm form-floating">
+                                <span>Descripción de la Solicitud:</span>
+                                <textarea name="deslic" id="textarealic" class="form-control"></textarea>
+                            </div>
+    
+                            <div class="custom-file">
+                                <form enctype="multipart/form-data" class="form-license">
+                                    {% csrf_token %}
+                                    <div class="files-content">
+                                        <label for="archivoslic"><i class="fa-solid fa-arrow-up-from-bracket"></i>Elegir archivos</label>
+                                        <div id="filenamelic" class="files-names"></div>
+                                    </div>
+                                    <input type="file" name="archivoslic" id="archivoslic" onchange="handleFileSelectlic()" accept=".docx, .doc, .docm, .dot, .dotx, .dotm, .docm, application/msword,image/*, .pdf, .xls, .xlsx, .xlsm, .xltx, .xltm, .xlsb, .xlam" multiple>
+                                </form>
+                            </div>
+    
+                            <div class="authorizers-license input-group-sm">
+                                <span>Responsable(s) de autorizacion:</span>
+                                <input list="solic-autho-lic" id="auth-license" name="aprobadorlic" type="text" class="form-control authlic" autocomplete="off">
+                                <datalist id="solic-autho-lic">
+                                    {% for nombre_trabajador in nombres_trabajadores %}
+                                        <option value="{{ nombre_trabajador }}"></option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+
+                            {% if intermediario == 0 %}
+                                <div class="solicitante-licencia input-group-sm">
+                                    <span>Solicitante(s):</span>
+                                    <input class="form-control soliclic" id="solic-lic" name="solicitantelic" value="{{ user_name }}" readonly>
+                                </div>
+                            {% else %}
+                                <div class="solicitante-licencia input-group-sm">
+                                    <span>Solicitante(s):</span>
+                                    <input list="solic-licencia" id="solic-lic" class="form-control soliclic" name="solicitantelic" type="text" autocomplete="off">
+                                    <datalist id="solic-licencia">
+                                        {% for nombre_trabajador in nombres_trabajadores %}
+                                            <option value="{{ nombre_trabajador }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            {% endif %}
+    
+                            <input type="hidden" name="tiposoliclic" value="3">
+                        </div>
+                        <div class="buttons-license">
+                            <button id="close4" class="btn btn-danger" type="button">Cancelar</button>
+                            <button id="creacBtnLicencia" class="btn btn-primary crear-btn-solicitud" type="submit">Crear</button>
+                        </div>
+                    </div>                   
+                </form>
 
 
                 
-                <!-- FALTAS -->
-                <div class="hidden faltas-option">
-                    <div class="notification">
-                        <span>Vacaciones: 27 dias disponibles</span>
-                    </div>
-                    <div class="period">
-                        <div class="periods">
-                            <div class="period-start input-group-sm">
-                                <span>Inicio Periodo:</span>
-                                <input id="date5" type="text" class="form-control"> 
+                <!-- MARK:F.FALTAS -->
+                <form id="faltas-form" action="{% url 'falta_solicitud' %}" method="POST" class="hidden faltas-option">
+                    {% csrf_token %}
+                    <div class="period-faltas">
+                        <div class="period">
+                            <div class="notification">
+                                <span>Vacaciones: 27 dias disponibles</span>
                             </div>
-                            <div class="period-end input-group-sm">
-                                <span>Fin Periodo:</span>
-                                <input id="date6" type="text" class="form-control">
-                            </div> 
-                            <div class="total-days input-group-sm">
-                                <span>Dias:</span>
-                                <input type="text" class="form-control" disabled>
+                            <div class="periods">
+                                <div class="period-start input-group-sm">
+                                    <span>Inicio Periodo:</span>
+                                    <input id="date7" name="fecinicfal" type="text" class="form-control flatpickr"> 
+                                </div>
+                                <div class="period-end input-group-sm">
+                                    <span>Fin Periodo:</span>
+                                    <input id="date8" name="fecfinfal" type="text" class="form-control flatpickr">
+                                </div> 
+                                <div class="total-days input-group-sm">
+                                    <span>Dias:</span>
+                                    <input id="days4" name="diasfal" type="text" class="form-control daysfal" readonly>
+                                </div>
+                                <div class="total-days input-group-sm">
+                                    <span>Horas:</span>
+                                    <input type="text" id="hoursfal" name="horasfal" class="form-control hoursfal" readonly>
+                                </div>            
                             </div>
-                            <div class="total-days input-group-sm">
-                                <span>Horas:</span>
-                                <input type="text" class="form-control" disabled>
-                            </div>            
+
+                            <!-- <div class="type-faltas">
+                                <span>Compensar Faltas por:</span>
+    
+                                <select id="comfal" name="comfal" class="form-select form-select-sm">
+                                    <option value="" disabled selected class="hidden">Selecciona una opción</option>
+                                    <option value="1">CON VACACIONES</option>
+                                    <option value="2">CON SUELDO</option>
+                                </select>
+                            </div> -->
+
+                            <div class="faltas-detail">
+                                <span>Causas de las faltas:</span>
+    
+                                <select id="causafal" name="causafal" class="form-select form-select-sm">
+                                    <option value="" disabled selected class="hidden">Selecciona una opción</option>
+                                    <option value="1">INASISTENCIA</option>
+                                    <option value="2">JORNADA LABORAL INCOMPLETA</option>
+                                    <option value="3">OTROS</option>
+                                </select>
+                            </div>
+
+                            <div class="request-details-faltas input-group-sm form-floating">
+                                <span>Descripción de la Solicitud:</span>
+                                <textarea id="textareafal" name="desfal" class="form-control"></textarea>
+                            </div>
+
+                            <div class="authorizers-faltas input-group-sm">
+                                <span>Responsable(s) de autorizacion:</span>
+                                <input list="solic-autho-fal" id="auth-faltas" name="aprobadorfal" type="text" class="form-control authfal" autocomplete="off">
+                                <datalist id="solic-autho-fal">
+                                    {% for nombre_trabajador in nombres_trabajadores %}
+                                        <option value="{{ nombre_trabajador }}"></option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+
+                            {% if intermediario == 0 %}
+                                <div class="solicitante-faltas input-group-sm">
+                                    <span>Solicitante(s):</span>
+                                    <input class="form-control solicfal" id="solic-fal" name="solicitantefal" value="{{ user_name }}">
+                                </div>
+                            {% else %}
+                                <div class="solicitante-faltas input-group-sm">
+                                    <span>Solicitante(s):</span>
+                                    <input list="solic-faltas" id="solic-fal" class="form-control solicfal" name="solicitantefal" type="text" autocomplete="off">
+                                    <datalist id="solic-faltas">
+                                        {% for nombre_trabajador in nombres_trabajadores %}
+                                            <option value="{{ nombre_trabajador }}"></option>
+                                        {% endfor %}
+                                    </datalist>
+                                </div>
+                            {% endif %}
+    
+                            <input type="hidden" name="tiposolicfal" value="4">
                         </div>
 
-                        <div class="type-faltas">
-                            <span>Compensar Faltas por:</span>
-
-                            <select class="form-select form-select-sm">
-                                <option value="" disabled selected>Selecciona una opción</option>
-                                <option>CON VACACIONES</option>
-                                <option>CON SUELDO</option>
-                            </select>
-                        </div>
-
-                        <div class="faltas-detail">
-                            <span>Causas de las faltas:</span>
-
-                            <select class="form-select form-select-sm">
-                                <option value="" disabled selected>Selecciona una opción</option>
-                                <option>INASISTENCIA</option>
-                                <option>JORNADA LABORAL INCOMPLETA</option>
-                                <option>OTROS</option>
-                            </select>
-                        </div>
-
-                        <div class="request-details-faltas input-group-sm form-floating">
-                            <span>Descripción de la Solicitud:</span>
-                            <textarea contenteditable="true" class="form-control"></textarea>
-                        </div>
-                        <div class="authorizers-faltas input-group-sm">
-                            <span>Responsable(s) de autorizacion:</span>
-                            <input type="text" class="form-control" disabled>
-                        </div>
-                        <div class="signature-faltas form-switch">
-                            <input type="checkbox" class="form-check-input">
-                            <span>Autorización de Firma Digital</span>
+                        <div class="buttons-vacaciones">
+                            <button id="close5" class="btn btn-danger" type="button">Cancelar</button>
+                            <button id="creacBtnFaltas" class="btn btn-primary crear-btn-solicitud" type="submit">Crear</button>
                         </div>
                     </div>
-                    
-                    <div class="buttons-faltas">
-                        <button class="btn btn-danger">Cancelar</button>
-                        <button class="btn btn-primary">Crear</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 
     <script>
-        const subirArchivoUrl = "{% url 'subir_archivo_sharepoint' %}";
+        var eliminarSolicitudUrl = "{% url 'eliminar_solicitud' 0 %}";
+        var editarSolicitudUrl = "{% url 'editar_solicitud' 0 %}";
     </script>
+
     <script src="../../static/js/inicio/solicitudes.js"></script>
     {% endblock %}
-    
+
 </body>
 </html>

@@ -37,14 +37,6 @@
                   <a href="#" class="sub-item"><span><span>KPI</span></span></a>
                 </div>
                 <a href="{% url 'solicitudes' %}" id="request-link" class="sub-item"><span>SOLICITUDES</span></a>
-                <!-- href="{% url 'solicitudes' %}" -->
-                <!-- <div class="sub-menu2">
-                  <a href="#" class="sub-item"><span>VACACIONES</span></a>
-                  <a href="#" class="sub-item"><span>PERMISOS</span></a>
-                  <a href="#" class="sub-item"><span>LICENCIAS</span></a>
-                  <a href="#" class="sub-item"><span>FALTAS</span></a>
-                  <a href="#" class="sub-item"><span>SEGUIMIENTO</span></a>
-                </div> -->
                 <a href="#" class="sub-item"><span>REPORTES</span></a>
               </div>
             </div>
@@ -85,21 +77,25 @@
       </div>
     
     
-
-
     <!-- CONTENIDO DE LA PAGINA -->
-   
     <div class="content-principal">
       <div class="header-custom">
         <div class="menu-btn" style="visibility: visible;">
           <i class="fas fa-bars" aria-hidden="true"></i>
         </div>
         <div class="user">
+          {% if intermediario == 0 %}
           <div class="user-img">
             <img loading="lazy" src="../static/img/foto_perfil.jpg" alt="imgprofile">
           </div>
+          {% else %}
+          <div class="user-img">
+            <i class="fa-solid fa-screwdriver-wrench"></i>
+            <img loading="lazy" src="../static/img/foto_perfil.jpg" alt="imgprofile">
+          </div>
+          {% endif %}
           <div class="name">{{ user_name }}</div>
-          <a href="{% url 'cerrar_sesion' %}"><i class="fa-solid fa-right-from-bracket"></i></a>
+          <a href="{% url 'cerrar_sesion' %}"><i class="fa-solid fa-right-from-bracket" aria-label="Read more about Seminole tax hike"></i></a>
         </div>
       </div>
     </div>
@@ -107,14 +103,7 @@
 
     {% block content %}
     <div class="content">
-      <h1>HOLA MUNDO</h1>
-
-      <form id="uploadform" action="{% url 'subir_archivo_sharepoint' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="archivo" id="archivo">
-        <input type="hidden" name="next_url" value="{{ request.get_full_path }}">
-        <input type="submit" value="Subir archivo">
-      </form>
+      <h1>Bienvenido a Pil system</h1>
     </div>
     {% endblock %}
 
@@ -124,38 +113,28 @@
       {% for message in messages %}
         {% if message.tags == 'success' %}
           <div id="success_message" class="success-custom">
-            <i class="fa-solid fa-circle-check"></i>
-            <div class="progress-bar"></div>
+            <i class="fa-solid fa-circle-check iconimg"></i>
+            <!-- <div class="progress-bar"></div> -->
             {{ message }}
+            <span class="close-btn-not"><i class="fa-solid fa-xmark"></i></span>
           </div>
         {% elif message.tags == 'error' %}
           <div id="error_message" class="error-custom">
-            <i class="fa-solid fa-circle-xmark"></i>
-            <div class="progress-bar"></div>
+            <i class="fa-solid fa-circle-xmark iconimg"></i>
+            <!-- <div class="progress-bar"></div> -->
             {{ message }}
+            <span class="close-btn-not"><i class="fa-solid fa-xmark"></i></span>
           </div>
         {% else %}
           <div id="info_message" class="info-custom">
-            <i class="fa-solid fa-circle-info"></i>
-            <div class="progress-bar"></div>
+            <i class="fa-solid fa-circle-info iconimg"></i>
+            <!-- <div class="progress-bar"></div> -->
             {{ message }}
+            <span class="close-btn-not"><i class="fa-solid fa-xmark"></i></span>
           </div>
         {% endif %}
       {% endfor %}
       {% endif %}
-    {% endblock %}
-
-    {% block loader %}
-    <!-- PANTALLA DE CARGA -->
-    <div id="loader" class="loader-container">
-      <div class="loader">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <p>Cargando...</p>
-    </div>
     {% endblock %}
     <script src="../static/js/index.js"></script>
  </body>

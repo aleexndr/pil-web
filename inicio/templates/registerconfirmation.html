@@ -16,7 +16,7 @@
       <div class="content">
 
         <i class="fa-regular fa-circle-check"></i>
-        <h4>¡Bienvenido, {{ nombre }} {{ paterno }}! Tu contraseña se ha creado correctamente </h4>
+        <h4>¡Bienvenido, {{ nombre }} {{ paterno }}! Tu cuenta se ha creado correctamente.</h4>
 
         <form action="{% url 'iniciar_sesion' %}" class="form" id="verify" name="verify">
           {% csrf_token %}

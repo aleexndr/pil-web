@@ -249,6 +249,7 @@ body{
     display: flex;
     background-color: rgba(92, 121, 165, 0.5);
     justify-content: center;
+    overflow-y: hidden;
     align-items: center;
     z-index: 1;
 }
@@ -259,10 +260,10 @@ body{
     align-items: center;
     justify-content: center;
     background-color: #fff;
-    padding: 20px;
     margin: 20px;
-    border-radius: 10px;
-    max-height: 95%;
+    padding: 20px 20px 10px 20px;
+    border-radius: 8px;
+    max-height: 96%;
     min-width: 200px;
     max-width: 700px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -279,6 +280,20 @@ body{
 
 .close:hover,
 .close:focus {
+    color: #000;
+}
+
+.closeedit {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.closeedit:hover,
+.closeedit:focus {
     color: #000;
 }
 
@@ -310,7 +325,7 @@ body{
     background-color: #E4E9F7;
     border-radius: 5px;
     color: #427FC8;
-    margin: 10px 15px;
+    margin: 0px 15px 20px 15px;
     font-weight: 600;
     box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.3);
     padding: 5px 10px;
@@ -322,7 +337,6 @@ body{
     flex-direction: column;
     align-items: center;
     overflow-y: auto;
-    padding-block: 15px;
     justify-content: space-between;
     width: 100%;
 }
@@ -388,6 +402,36 @@ body{
     margin: 10px;
 }
 
+
+
+
+.file-item-des-edt {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 48%;
+    margin: 5px 0;
+    background: #f4f4f4;
+    border: solid 2px #e3e4e5;
+    border-radius: 5px;
+}
+
+.file-item-des-edt p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: auto;
+    font-weight: 500;
+}
+
+.file-item-des-edt span{
+    margin: 10px;
+}
+
+
+
+
+
 .btn-remove-file{
     cursor: pointer;
 }
@@ -414,6 +458,17 @@ body{
 
 
 /*----- VACACIONES -----*/
+.period-vacaciones{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    justify-content: space-between;
+    padding-block: 10px;
+    height: 60vh;
+    width: 100%;
+}
+
 .vacaciones-option{
     display: flex;
     flex-direction: column;
@@ -430,6 +485,16 @@ body{
     justify-content: left;
     text-align: left;
     margin-block: 15px;
+    width: 85%;
+}
+
+.solicitante-vacaciones{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+    margin: 0 0 15px 0;
     width: 85%;
 }
 
@@ -458,9 +523,64 @@ body{
     width: 50%;
 }
 
+.authvac{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: default;
+}
+
+.authvac:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
+.solicvac{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: default;
+}
+
+#solic-vacaciones::-webkit-datalist-option {
+    background-color: lightgray;
+    padding: 5px;
+    border-bottom: 1px solid gray;
+}
+
+
+.solicvac:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
+.daysvac{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: default;
+}
+
+.daysvac:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
+
 
 
 /*----- DESCANSO -----*/
+.period-descanso{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    justify-content: space-between;
+    padding-block: 10px;
+    height: 60vh;
+    width: 100%;
+}
+
 .descanso-option{
     display: flex;
     flex-direction: column;
@@ -524,6 +644,40 @@ body{
     width: 50%;
 }
 
+.authdes{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: default;
+}
+
+.authdes:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
+.solicitante-descanso{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+    margin: 0 0 15px 0;
+    width: 85%;
+}
+
+.solicdes{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: auto;
+}
+
+.solicdes:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
 .custom-file{
     display: flex;
     align-items: center;
@@ -563,11 +717,25 @@ body{
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .form-descanso label{
     margin: 5px;
 }
+
+.daysdes{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: default;
+}
+
+.daysdes:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
 
 
 
@@ -621,6 +789,40 @@ body{
     width: 85%;
 }
 
+.authlic{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: default;
+}
+
+.authlic:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
+.soliclic{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: auto;
+}
+
+.soliclic:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
+.solicitante-licencia{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+    margin: 0 0 15px 0;
+    width: 85%;
+}
+
 .signature-license{
     display: flex;
     align-items: center;
@@ -657,10 +859,33 @@ body{
     margin: 5px;
 }
 
+.dayslic{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: default;
+}
+
+.dayslic:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
 
 
 /*----- FALTAS -----*/
-/* .faltas-option{
+.period-faltas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    justify-content: space-between;
+    padding-block: 10px;
+    height: 60vh;
+    width: 100%;
+}
+
+.faltas-option{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -698,6 +923,16 @@ body{
     width: 85%;
 }
 
+.solicitante-faltas{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+    margin: 0 0 15px 0;
+    width: 85%;
+}
+
 .signature-faltas{
     display: flex;
     align-items: center;
@@ -709,6 +944,30 @@ body{
     margin-inline: 10px;
 }
 
+.authfal{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: default;
+}
+
+.authfal:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
+.solicfal{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: default;
+}
+
+.solicfal:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
 .buttons-faltas{
     display: flex;
     align-items: center;
@@ -717,11 +976,51 @@ body{
     width: 100%;
 }
 
+.authorizers-faltas{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    text-align: left;
+    margin-block: 15px;
+    width: 85%;
+}
+
 .buttons-faltas button{
     margin-inline: 10px;
     width: 50%;
-} */
+}
 
+.daysfal{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: default;
+}
+
+.daysfal:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
+.hoursfal{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    cursor: default;
+}
+
+.hoursfal:focus{
+    background: #E9ECEF;
+    border: solid 1px #dee2e6;
+    box-shadow: none;
+}
+
+
+.code-solic{
+    background-color: #ddd;
+    border-radius: 3px;
+    padding: 2px 4px;
+}
 
 
 /*----- BOTON CREAR -----*/
@@ -773,6 +1072,25 @@ body{
     background: #3a0ca3;
     transition: background 0s;
    }
+
+
+
+
+   .mensaje-confirmacion {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+
+
+
 
 
 
@@ -882,6 +1200,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 8%;
    }
 
    .issued{

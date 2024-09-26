@@ -41,37 +41,56 @@ closeBtn.addEventListener('click', function() {
 
 
 
-//VENTANA DE LOAD - CARGA DE ARCHIVOS
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("uploadform").addEventListener("submit", function(event) {
-        mostrarSpinner();
-    });
-    
-    function mostrarSpinner() {
-        const load = document.getElementById("loader");
-        load.style.display = "flex";
-    }
 
-    function ocultarSpinner() {
-        const load = document.getElementById("loader");
-        load.style.display = "none";
-    }
+//VENTANA DE LOAD - CARGA DE ARCHIVOS
+// document.addEventListener("DOMContentLoaded", function() {
+//     document.getElementById("uploadform").addEventListener("submit", function(event) {
+//         mostrarSpinner();
+//     });
     
-    window.addEventListener("load", function() {
-        ocultarSpinner();
-    });
-});
+//     function mostrarSpinner() {
+//         const load = document.getElementById("loader");
+//         load.style.display = "flex";
+//     }
+
+//     function ocultarSpinner() {
+//         const load = document.getElementById("loader");
+//         load.style.display = "none";
+//     }
+    
+//     window.addEventListener("load", function() {
+//         ocultarSpinner();
+//     });
+// });
+
+
+
 
 
 //MENSAJES DE CONFIRMACION PARA ENVIO DE ARCHIVO
-function hideMessages() {
-    const progressBars = document.querySelectorAll('.progress-bar');
+// function hideMessages() {
+//     const progress = document.querySelectorAll('.close-btn-not');
 
-    setTimeout(() => {
-        progressBars.forEach((progressBar) => {
-                progressBar.parentElement.style.display = 'none';
+//     setTimeout(() => {
+//         progress.forEach((progressBar) => {
+//                 progressBar.parentElement.style.display = 'none';
+//         });
+//     }, 3930);
+// }
+
+
+
+// window.onload = hideMessages;
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const closeButtons = document.querySelectorAll('.close-btn-not');
+
+    closeButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            button.parentElement.style.display = 'none';
         });
-    }, 3930);
-}
-
-window.onload = hideMessages;
+    });
+});

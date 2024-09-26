@@ -159,17 +159,17 @@ body{
 
  .content-principal{
   display: flex;
-  flex-direction: column;
-  margin: 10px;
+  /* flex-direction: column; */
+  /* margin: 10px; */
  }
 
   .user{
   position: relative;
-  margin: 0px 20px;
-  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 0px 20px;
+  padding: 10px;
  }
 
  .header-custom{
@@ -183,6 +183,7 @@ body{
  .content-principal .user .user-img{
   display: flex;
   align-items: center;
+  justify-content: space-between;
  }
 
  .content-principal .user img{
@@ -306,7 +307,7 @@ body{
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
-.success-custom i {
+.success-custom .iconimg {
   color: rgb(25, 186, 23);
   margin: 0px 10px 0px 0px;
   font-size: 35px;
@@ -329,7 +330,7 @@ body{
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
-.error-custom i {
+.error-custom .iconimg {
   color: rgb(213, 16, 16);
   margin: 0px 10px 0px 0px;
   font-size: 35px;
@@ -352,13 +353,13 @@ body{
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
-.info-custom i {
+.info-custom .iconimg {
   color: rgb(19, 83, 194);
   margin: 0px 10px 0px 0px;
   font-size: 35px;
 }
 
-.progress-bar {
+/* .progress-bar {
   height: 4px;
   border-radius: 0px 0px 0px 10px;
   width: 100%;
@@ -369,6 +370,18 @@ body{
   opacity: 1;
   transition: opacity 1s ease;
   animation: progressBarAnimation 4s linear forwards;
+} */
+
+.close-btn-not {
+  margin-left: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  color: #aaa;
+}
+
+.close-btn-not:hover {
+  color: #000;
 }
 
 @keyframes progressBarAnimation {

@@ -25,10 +25,12 @@
           <span class="underline"></span>
         </div>
 
-        {% if error_message %}
-          <div class="alert-custom">
-          {{ error_message }}
-          </div>
+        {% if messages%}
+        <div class="alert-custom">
+          {% for message in messages %}
+            {{ message }}
+          {% endfor %}
+        </div>
         {% endif %}
 
         <button type="submit" class="btn btn-primary boton-verify" name="submit">VERIFICAR</button>
