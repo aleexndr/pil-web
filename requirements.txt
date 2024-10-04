@@ -4,6 +4,8 @@ cffi==1.15.1
 charset-normalizer==3.2.0
 cryptography==41.0.3
 Django==4.2.4
+django-ratelimit==4.1.0
+greenlet==3.1.1
 idna==3.4
 lxml==4.9.3
 msal==1.24.0
@@ -13,11 +15,16 @@ pycparser==2.21
 PyJWT==2.8.0
 pyodbc==4.0.39
 pyspnego==0.9.2
+python-dotenv==1.0.0
+python-tds==1.15.0
 pytz==2023.3
 requests==2.31.0
 requests-ntlm==1.2.0
 requests-toolbelt==1.0.0
 SharePlum==0.5.1
+SQLAlchemy==2.0.35
+sqlalchemy_pytds @ git+https://github.com/m32/sqlalchemy-tds.git@8bbe52c46d7b6653e5c2345173beb55668347717
 sqlparse==0.4.4
+typing_extensions==4.12.2
 tzdata==2023.3
 urllib3==2.0.4

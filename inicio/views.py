@@ -6,22 +6,30 @@ import smtplib
 import base64
 import random
 import datetime
-# from datetime import datetime
 from django.db import connection
 from django.db import ProgrammingError, DatabaseError
 from django.shortcuts import render, redirect
 from django.contrib import messages
-# from django.http import JsonResponse
-# from django.utils.datastructures import MultiValueDictKeyError
+####################################
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.hashers import make_password, check_password
+from django_ratelimit.decorators import ratelimit
+####################################
 from django.core.files.uploadedfile import UploadedFile
 from office365.sharepoint.client_context import ClientContext
 from office365.sharepoint.files.file import File
 from dotenv import load_dotenv
 from email.message import EmailMessage
 
+
+
+
 # Create your views here.
 
 load_dotenv()
+
+# engine = create_engine('mssql+pytds://adminAtlas:C#3ntvI2ion96$$@191.98.141.245:1433/ATLAS')
+# connection = engine.connect()
 
 #MARK:USER_AUTH
 def usuario_autenticado(request):   #✓
@@ -53,33 +61,74 @@ def error_autenticacion(request):   #✓
 
 
 #MARK:INICIAR_SESION
-def iniciar_sesion(request):    #✓
+# @ratelimit(key='ip', rate='5/120s', method=['POST', 'GET'], block=True)
+def iniciar_sesion(request):
+    # if getattr(request, 'limited', False):
+    #     messages.error(request, "Has intentado demasiadas veces. Inténtalo de nuevo en un minuto.")
+    #     return render(request, 'login.html')
+    # else:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
 
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+            try:
+                with connection.cursor() as cursor:
+                    
+                    combined_string = username + password
+                    hashed_password = hashlib.sha256(combined_string.encode()).digest()
 
-        try:
-            with connection.cursor() as cursor:
-                combined_string = username + password
-                hashed_password = hashlib.sha256(combined_string.encode()).digest()
+                    # hashed_password = make_password(password)
+                    # check_password(password, hashed_password)
 
-                result = cursor.execute("SELECT idTrabajador FROM [ATLAS].[06].[00Credenciales] WHERE Pass = %s", [hashed_password]).fetchone()
+                    result = cursor.execute("SELECT idTrabajador FROM [ATLAS].[06].[00Credenciales] WHERE Pass = %s", [hashed_password]).fetchone()
 
-                if result:
-                    user = result[0]
-                    request.session['user_id'] = user
-                    return redirect('inicio/')
-                else:
-                    error_message = "Acceso denegado. El usuario o la contraseña que proporcionaste no son válidos."
-                    messages.error(request, error_message)
+                    if result:
+                        user = result[0]
+                        request.session['user_id'] = user
+                        return redirect('inicio/')
+                    else:
+                        error_message = "Acceso denegado. El usuario o la contraseña que proporcionaste no son válidos."
+                        messages.error(request, error_message)
 
-        except ProgrammingError as e:
-            error_message = f"Error de base de datos: {e}"
-            messages.error(request, error_message)
+            except ProgrammingError as e:
+                error_message = f"Error de base de datos: {e}"
+                messages.error(request, error_message)
 
-    return render(request, 'login.html')
+        return render(request, 'login.html')
 
+
+
+
+# def iniciar_sesion(request):    #✓
+
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+
+#         try:
+#             with connection.cursor() as cursor:
+                
+#                 combined_string = username + password
+#                 hashed_password = hashlib.sha256(combined_string.encode()).digest()
+
+#                 # hashed_password = make_password(password)
+#                 # check_password(password, hashed_password)
+
+#                 result = cursor.execute("SELECT idTrabajador FROM [ATLAS].[06].[00Credenciales] WHERE Pass = %s", [hashed_password]).fetchone()
+
+#                 if result:
+#                     user = result[0]
+#                     request.session['user_id'] = user
+#                     return redirect('inicio/')
+#                 else:
+#                     error_message = "Acceso denegado. El usuario o la contraseña que proporcionaste no son válidos."
+#                     messages.error(request, error_message)
+
+#         except ProgrammingError as e:
+#             error_message = f"Error de base de datos: {e}"
+#             messages.error(request, error_message)
+
+#     return render(request, 'login.html')
 
 
 
@@ -907,6 +956,9 @@ def descanso_solicitud(request):    #✓
             password = os.getenv('SHAREPOINT_PASSWORD')
             sharepoint_folder_des = os.getenv('SHAREPOINT_FOLDER')
 
+            # Extensiones permitidas
+            allowed_extensions = ['pdf', 'jpg', 'jpeg', 'png']
+
             try:
                 with connection.cursor() as cursor:
 
@@ -931,7 +983,16 @@ def descanso_solicitud(request):    #✓
 
                                 if isinstance(uploaded_file, UploadedFile):
                                     file_name_des = uploaded_file.name
-                                    file_content_des = uploaded_file.read()
+                                    file_extension = file_name_des.split('.')[-1].lower()
+                                    
+                                    # Validar extensión de archivo
+                                    if file_extension not in allowed_extensions:
+                                        error_message = f"El archivo '{file_name_des}' no tiene una extensión permitida. Solo se permiten archivos: {', '.join(allowed_extensions)}."
+                                        messages.error(request, error_message)
+                                        return redirect('solicitudes')
+                                    
+                                    else:
+                                        file_content_des = uploaded_file.read()
 
                                     try:
                                         ctx_des.web.get_folder_by_server_relative_url(target_folder_url_des).files.add(file_name_des, file_content_des)
@@ -1009,6 +1070,8 @@ def descanso_solicitud_editar(request):     #✓
             password_edt = os.getenv('SHAREPOINT_PASSWORD')
             sharepoint_folder_des_edt = os.getenv('SHAREPOINT_FOLDER')
 
+            allowed_extensions_des_edt = ['pdf', 'jpg', 'jpeg', 'png']
+
 
             try:
                 with connection.cursor() as cursor:
@@ -1022,13 +1085,13 @@ def descanso_solicitud_editar(request):     #✓
                     id_insert_descanso_edt = f"{idsolicdesedt}. {namesolicdesedt}"
 
                     try:
-                        ctx_des = ClientContext(sharepoint_url_des_edt).with_user_credentials(username_edt, password_edt)
+                        ctx_des_edt = ClientContext(sharepoint_url_des_edt).with_user_credentials(username_edt, password_edt)
                         target_folder_url_des_edt = f"{sharepoint_folder_des_edt}/Descansos/{id_insert_descanso_edt}"
 
                         for url in urls_archivos_eliminar:
-                            file_to_delete = ctx_des.web.get_file_by_server_relative_url(url)
+                            file_to_delete = ctx_des_edt.web.get_file_by_server_relative_url(url)
                             file_to_delete.delete_object()
-                        ctx_des.execute_query()
+                        # ctx_des.execute_query()
 
                     except Exception as e:
                         error_message = f"Error al eliminar archivos existentes en SharePoint"
@@ -1036,25 +1099,46 @@ def descanso_solicitud_editar(request):     #✓
                         return redirect('solicitudes')
 
 
-                    for archivo_nuevo  in archivos_nuevos:
+                    for archivo_nuevo_des_edt  in archivos_nuevos:
 
                         try:
-                            file_name_des_edt = archivo_nuevo.name
-                            file_content_des_edt = archivo_nuevo.read()
+                            file_name_des_edt = archivo_nuevo_des_edt.name
+                            file_extension_des_edt = file_name_des_edt.split('.')[-1].lower()
+
+                            if file_extension_des_edt not in allowed_extensions_des_edt:
+                                error_message = f"El archivo '{file_name_des_edt}' no tiene una extensión permitida."
+                                messages.error(request, error_message)
+                                return redirect('solicitudes')
+                                    
+                            else:
+                                file_content_des_edt = archivo_nuevo_des_edt.read()
+
+                            try:
+                                ctx_des_edt.web.get_folder_by_server_relative_url(target_folder_url_des_edt).files.add(file_name_des_edt, file_content_des_edt)
+                                # target_file_des_edt = ctx_des.web.get_folder_by_server_relative_url(target_folder_url_des_edt).files.add(file_name_des_edt, file_content_des_edt)
+                                # ctx_des.load(target_file_des_edt)
+                                # ctx_des.execute_query()
                             
-                            target_file_des_edt = ctx_des.web.get_folder_by_server_relative_url(target_folder_url_des_edt).files.add(file_name_des_edt, file_content_des_edt)
-                            ctx_des.load(target_file_des_edt)
-                            ctx_des.execute_query()
+                            except Exception as e:
+                                error_message = f"Error al subir los archivos"
+                                messages.error(request, error_message)
+                                return redirect('solicitudes')
 
                         except Exception as e:
-                            error_message = f"Error al subir los archivos"
+                            error_message = f"Archivos no encontrados"
                             messages.error(request, error_message)
                             return redirect('solicitudes')
-                    
-                    success_message = f"Su solicitud se ha editado correctamente"
-                    messages.success(request, success_message)
-                    return redirect('solicitudes')
+                        
+                    try:
+                        ctx_des_edt.execute_query()  
+                        success_message = f"Su solicitud se ha creado correctamente"
+                        messages.success(request, success_message)
+                        return redirect('solicitudes')
 
+                    except Exception as e:
+                        error_message = f"Error al subir los archivos"
+                        messages.error(request, error_message)
+                        return redirect('solicitudes')
 
             except (TypeError, DatabaseError) as t:
                 error_message = f"Error al editar la solicitud"
@@ -1093,6 +1177,8 @@ def licencia_solicitud(request):    #✓
             password_lic = os.getenv('SHAREPOINT_PASSWORD')
             sharepoint_folder_lic = os.getenv('SHAREPOINT_FOLDER')
 
+            allowed_extensions_lic = ['pdf', 'jpg', 'jpeg', 'png', 'docx']
+
             try:
                 with connection.cursor() as cursor:
 
@@ -1119,26 +1205,41 @@ def licencia_solicitud(request):    #✓
                                 
                                 if isinstance(uploaded_file_lic, UploadedFile):
                                     file_name_lic = uploaded_file_lic.name
-                                    file_content_lic = uploaded_file_lic.read()
+                                    file_extension_lic = file_name_lic.split('.')[-1].lower()
+
+                                    if file_extension_lic not in allowed_extensions_lic:
+                                        error_message = f"El archivo '{file_name_lic}' no tiene una extensión permitida."
+                                        messages.error(request, error_message)
+                                        return redirect('solicitudes')
+                                    
+                                    else:
+                                        file_content_lic = uploaded_file_lic.read()
 
                                     try:
-                                        target_file_lic = ctx_lic.web.get_folder_by_server_relative_url(target_folder_url_lic).files.add(file_name_lic, file_content_lic)
-                                        ctx_lic.load(target_file_lic)
-                                        ctx_lic.execute_query()
+                                        ctx_lic.web.get_folder_by_server_relative_url(target_folder_url_lic).files.add(file_name_lic, file_content_lic)
+                                        # target_file_lic = ctx_lic.web.get_folder_by_server_relative_url(target_folder_url_lic).files.add(file_name_lic, file_content_lic)
+                                        # ctx_lic.load(target_file_lic)
+                                        # ctx_lic.execute_query()
 
                                     except Exception as e:
                                         error_message = "Error al subir el archivo"
                                         messages.error(request, error_message)
-                                        return redirect('solicitudes')
 
                                 else:
                                     error_message = "Error al encontrar el archivo"
                                     messages.error(request, error_message)
                                     return redirect('solicitudes')
+                            
+                            try:
+                                ctx_lic.execute_query()  
+                                success_message = f"Su solicitud se ha creado correctamente"
+                                messages.success(request, success_message)
+                                return redirect('solicitudes')
 
-                            success_message = "Su solicitud se ha creado correctamente"
-                            messages.success(request, success_message)
-                            return redirect('solicitudes')
+                            except Exception as e:
+                                error_message = f"Error al subir los archivos"
+                                messages.error(request, error_message)
+                                return redirect('solicitudes')
 
                         except Exception as e:
                             error_message = "Error al subir los archivos"
@@ -1149,11 +1250,7 @@ def licencia_solicitud(request):    #✓
                         messages.error(request, error_message)
                         return redirect('solicitudes')
                     
-            except TypeError as a:
-                error_message = "Error al crear la solicitud"
-                messages.error(request, error_message)
-
-            except DatabaseError as e:
+            except (TypeError, DatabaseError):
                 error_message = "Error al crear la solicitud"
                 messages.error(request, error_message)
 
@@ -1169,7 +1266,7 @@ def licencia_solicitud(request):    #✓
 
 
 #MARK:F.E.LICENCIA
-def licencia_solicitud_editar(request):     #falta editar los archivos
+def licencia_solicitud_editar(request):    #✓
 
     if usuario_autenticado(request):
 
@@ -1192,6 +1289,8 @@ def licencia_solicitud_editar(request):     #falta editar los archivos
             password_edt_lic = os.getenv('SHAREPOINT_PASSWORD')
             sharepoint_folder_lic_edt = os.getenv('SHAREPOINT_FOLDER')
 
+            allowed_extensions_lic_edt = ['pdf', 'jpg', 'jpeg', 'png', 'docx']
+
             try:
                 with connection.cursor() as cursor:
 
@@ -1206,13 +1305,13 @@ def licencia_solicitud_editar(request):     #falta editar los archivos
                     id_insert_licencia_edt = f"{idsoliclicedt}. {namesoliclicedt}"
 
                     try:
-                        ctx_lic = ClientContext(sharepoint_url_lic_edt).with_user_credentials(username_edt_lic, password_edt_lic)
+                        ctx_lic_edt = ClientContext(sharepoint_url_lic_edt).with_user_credentials(username_edt_lic, password_edt_lic)
                         target_folder_url_lic_edt = f"{sharepoint_folder_lic_edt}/Licencias/{id_insert_licencia_edt}"
 
                         for url in urls_archivos_eliminar_lic:
-                            file_to_delete = ctx_lic.web.get_file_by_server_relative_url(url)
+                            file_to_delete = ctx_lic_edt.web.get_file_by_server_relative_url(url)
                             file_to_delete.delete_object()
-                        ctx_lic.execute_query()
+                        # ctx_lic.execute_query()
 
                     except Exception as e:
                         error_message = f"Error al eliminar archivos existentes en SharePoint"
@@ -1220,24 +1319,46 @@ def licencia_solicitud_editar(request):     #falta editar los archivos
                         return redirect('solicitudes')
 
 
-                    for archivo_nuevo  in archivos_nuevos_lic:
+                    for archivo_nuevo_lic_edt  in archivos_nuevos_lic:
 
                         try:
-                            file_name_lic_edt = archivo_nuevo.name
-                            file_content_lic_edt = archivo_nuevo.read()
-                            
-                            target_file_lic_edt = ctx_lic.web.get_folder_by_server_relative_url(target_folder_url_lic_edt).files.add(file_name_lic_edt, file_content_lic_edt)
-                            ctx_lic.load(target_file_lic_edt)
-                            ctx_lic.execute_query()
+                            file_name_lic_edt = archivo_nuevo_lic_edt.name
+                            file_extension_lic_edt = file_name_lic_edt.split('.')[-1].lower()
+
+                            if file_extension_lic_edt not in allowed_extensions_lic_edt:
+                                error_message = f"El archivo '{file_name_lic_edt}' no tiene una extensión permitida."
+                                messages.error(request, error_message)
+                                return redirect('solicitudes')
+                                    
+                            else:
+                                file_content_lic_edt = archivo_nuevo_lic_edt.read()
+
+                            try:
+                                ctx_lic_edt.web.get_folder_by_server_relative_url(target_folder_url_lic_edt).files.add(file_name_lic_edt, file_content_lic_edt)
+                                # target_file_lic_edt = ctx_lic.web.get_folder_by_server_relative_url(target_folder_url_lic_edt).files.add(file_name_lic_edt, file_content_lic_edt)
+                                # ctx_lic.load(target_file_lic_edt)
+                                # ctx_lic.execute_query()
+
+                            except Exception as e:
+                                error_message = f"Error al subir los archivos"
+                                messages.error(request, error_message)
+                                return redirect('solicitudes')
 
                         except Exception as e:
                             error_message = f"Error al subir los archivos"
                             messages.error(request, error_message)
                             return redirect('solicitudes')
-                    
-                    success_message = f"Su solicitud se ha editado correctamente"
-                    messages.success(request, success_message)
-                    return redirect('solicitudes')
+                        
+                    try:
+                        ctx_lic_edt.execute_query()  
+                        success_message = f"Su solicitud se ha creado correctamente"
+                        messages.success(request, success_message)
+                        return redirect('solicitudes')
+
+                    except Exception as e:
+                        error_message = f"Error al subir los archivos"
+                        messages.error(request, error_message)
+                        return redirect('solicitudes')
 
             except (TypeError, DatabaseError) as t:
                 error_message = f"Error al editar la solicitud"
